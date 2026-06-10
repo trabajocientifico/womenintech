@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magia en tu Drive · Women in Tech Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1c0bb0; --navy-2:#16097f; --navy-3:#0d0556;
+  --cyan:#1fe6e6; --cyan-soft:#86f2f2; --white:#fff; --ink:#0b0550;
+  --good:#28e0a8; --warn:#ff5d8f;
+  --display:'Space Grotesk',sans-serif; --body:'Inter',sans-serif;
+  --mono:'JetBrains Mono',monospace; --serif:'Playfair Display',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--body);background:var(--navy-3);color:var(--white);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:var(--cyan)}
+
+#deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;
+  padding:clamp(26px,4.6vw,68px);
+  background:radial-gradient(125% 125% at 82% -12%, var(--navy) 0%, var(--navy-2) 46%, var(--navy-3) 100%);
+  overflow:hidden}
+.slide.active{display:flex;animation:slideIn .5s ease both}
+.slide.white{background:var(--white);color:var(--ink)}
+@keyframes slideIn{from{opacity:0;transform:translateY(16px) scale(.99)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.active{animation:none}*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+
+/* sparkles */
+.sparkles{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.spark{position:absolute;border-radius:50%;background:var(--cyan);opacity:0;box-shadow:0 0 12px 2px var(--cyan);animation:twinkle 4s ease-in-out infinite}
+.spark.cross{background:transparent;box-shadow:none}
+.spark.cross::before,.spark.cross::after{content:"";position:absolute;background:var(--cyan-soft);box-shadow:0 0 8px var(--cyan)}
+.spark.cross::before{left:50%;top:0;width:2px;height:100%;transform:translateX(-50%)}
+.spark.cross::after{top:50%;left:0;height:2px;width:100%;transform:translateY(-50%)}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:.95;transform:scale(1)}}
+.slide>*{position:relative;z-index:1}
+
+/* WiT logo */
+.wit{display:inline-flex;flex-direction:column;align-items:center;line-height:.82;user-select:none}
+.wit .w{font-family:var(--display);font-weight:700;letter-spacing:-1px;color:var(--cyan)}
+.wit .o{display:inline-block;position:relative}
+.wit .o::after{content:"";position:absolute;left:50%;top:18%;width:30%;height:30%;border-radius:50%;background:var(--navy);transform:translateX(-50%)}
+.wit .row2{margin-top:-.08em}
+.wit .col{font-family:var(--body);font-weight:600;color:var(--white);letter-spacing:.5px}
+.slide.white .wit .col{color:var(--ink)}
+.slide.white .wit .o::after{background:var(--white)}
+.logo-corner{position:absolute;top:clamp(16px,2.6vw,30px);right:clamp(16px,2.6vw,38px);z-index:3;font-size:13px}
+.logo-corner .col{font-size:.95em;margin-top:3px}
+
+/* header */
+.topbar{display:flex;align-items:center;gap:18px;margin-bottom:clamp(12px,2.6vh,30px)}
+.kicker{font-family:var(--mono);font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);font-weight:600}
+.slide-title{font-family:var(--display);font-weight:700;font-size:clamp(27px,4.2vw,50px);line-height:1.02;letter-spacing:-1.2px}
+.slide.white .slide-title{color:var(--ink)}
+.accent{color:var(--cyan)}
+.lead{font-size:clamp(16px,2vw,23px);line-height:1.5;max-width:62ch;color:#dcd7ff}
+.slide.white .lead{color:#3a3380}
+.fill{flex:1;display:flex;flex-direction:column;justify-content:center}
+
+/* icons */
+.ic{width:100%;height:100%;display:block}
+.ic-box{display:inline-flex;align-items:center;justify-content:center}
+.tool-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.tool-chip{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:9px 15px;font-size:14px;font-weight:500}
+.tool-chip .ic-box{width:24px;height:24px}
+.slide.white .tool-chip{background:rgba(28,11,176,.06);border-color:rgba(28,11,176,.16);color:var(--ink)}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px}
+.card{background:rgba(255,255,255,.06);border:1px solid rgba(31,230,230,.25);border-radius:18px;padding:20px;backdrop-filter:blur(6px);transition:transform .3s,border-color .3s}
+.card:hover{transform:translateY(-6px);border-color:var(--cyan)}
+.card .n{font-family:var(--mono);color:var(--cyan);font-weight:600;font-size:13px;letter-spacing:2px}
+.card h3{font-family:var(--display);font-size:19px;margin:8px 0 6px}
+.card p{font-size:14px;line-height:1.45;color:#cfc9ff}
+
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--cyan);color:var(--navy-3);font-weight:700;padding:11px 20px;border-radius:40px;font-size:15px;transition:transform .15s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(31,230,230,.35)}
+.btn.ghost{background:transparent;border:1.5px solid rgba(255,255,255,.4);color:var(--white)}
+.btn.ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+.btn.sm{padding:8px 16px;font-size:13px}
+.btn:active{transform:scale(.97)}
+
+/* ---------- PORTADA ---------- */
+#s-portada{align-items:center;justify-content:center;text-align:center}
+.cover-glow{position:absolute;width:75vw;height:75vw;max-width:900px;max-height:900px;left:50%;top:42%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle, rgba(31,230,230,.30) 0%, rgba(31,230,230,.10) 35%, transparent 65%);
+  filter:blur(10px);z-index:0;animation:breathe 6s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
+.cover-stack{display:flex;flex-direction:column;align-items:center;gap:clamp(10px,1.8vh,20px);max-width:1000px}
+.cover-kicker{font-family:var(--mono);letter-spacing:5px;font-size:clamp(11px,1.5vw,15px);color:var(--cyan);text-transform:uppercase;font-weight:600}
+.cover-kicker::before,.cover-kicker::after{content:"·";margin:0 12px;color:var(--cyan-soft)}
+.hero-title{font-family:var(--display);font-weight:700;font-size:clamp(46px,9.5vw,118px);line-height:.96;letter-spacing:-3px;
+  color:#fff;text-shadow:0 0 50px rgba(31,230,230,.35);position:relative}
+.hero-title .shine{background:linear-gradient(100deg,#fff 35%,var(--cyan) 50%,#fff 65%);-webkit-background-clip:text;background-clip:text;
+  color:transparent;background-size:220% 100%;animation:sheen 5.5s linear infinite}
+@keyframes sheen{to{background-position:-220% 0}}
+.hero-sub{font-family:var(--display);font-weight:500;font-size:clamp(16px,2.5vw,28px);color:var(--cyan-soft);letter-spacing:-.5px}
+.cover-div{width:64px;height:3px;background:var(--cyan);border-radius:3px;box-shadow:0 0 14px var(--cyan)}
+.speaker{font-size:clamp(15px,2vw,21px);font-weight:600}
+.speaker .role{display:block;font-weight:400;font-size:.78em;color:#bdb8f0;margin-top:3px;font-family:var(--mono);letter-spacing:.5px}
+.cover-date{font-family:var(--mono);color:var(--cyan);letter-spacing:2px;font-size:clamp(13px,1.7vw,17px);font-weight:600}
+.cover-tools{margin-top:4px}
+.cover-tools .lbl{font-family:var(--mono);font-size:12px;color:#8d88c8;letter-spacing:2px;margin-right:4px}
+.wand{display:inline-block;animation:floaty 3s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-9px) rotate(8deg)}}
+
+/* poll/myth */
+.mr-wrap{max-width:840px;margin-top:4px}
+.mr-stmt{font-family:var(--display);font-size:clamp(20px,2.9vw,32px);line-height:1.15;margin-bottom:18px;min-height:2em}
+.mr-opts{display:flex;gap:16px;flex-wrap:wrap}
+.mr-opt{flex:1;min-width:180px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.2);border-radius:16px;padding:18px;font-size:19px;font-weight:600;transition:.18s;display:flex;align-items:center;justify-content:center;gap:10px}
+.mr-opt:hover:not(:disabled){border-color:var(--cyan);transform:translateY(-3px)}
+.mr-opt.correct{background:rgba(40,224,168,.22);border-color:var(--good)}
+.mr-opt.wrong{background:rgba(255,93,143,.2);border-color:var(--warn)}
+.mr-meta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:14px;color:var(--cyan);margin-bottom:12px}
+.mr-fb{margin-top:16px;font-size:16px;color:#dcd7ff;min-height:26px;line-height:1.45}
+
+/* prompt builder */
+.pb-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:8px}
+@media(max-width:820px){.pb-grid{grid-template-columns:1fr}}
+.pb-col h4{font-family:var(--mono);color:var(--cyan);font-size:12.5px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:13px}
+.chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:30px;padding:7px 14px;font-size:13.5px;transition:.18s}
+.chip:hover{border-color:var(--cyan)}
+.chip.on{background:var(--cyan);color:var(--navy-3);border-color:var(--cyan);font-weight:600}
+.prompt-canvas{background:#0c0640;border:1px solid rgba(31,230,230,.4);border-radius:16px;padding:18px;font-family:var(--mono);font-size:14px;line-height:1.6;min-height:120px;color:var(--cyan-soft)}
+.meter{height:12px;border-radius:8px;background:rgba(255,255,255,.12);margin:14px 0 6px;overflow:hidden}
+.meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--warn),var(--cyan),var(--good));transition:width .5s}
+.meter-label{font-family:var(--mono);font-size:13px;color:#cfc9ff}
+
+/* notebook */
+.notebook{background:#0c0640;border-radius:16px;border:1px solid rgba(255,255,255,.1);overflow:hidden;max-width:880px;margin-top:8px}
+.nb-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(255,255,255,.05)}
+.nb-bar .dot{width:11px;height:11px;border-radius:50%}
+.nb-bar .ic-box{width:18px;height:18px;margin-left:auto}
+.nb-title{margin-left:8px;font-family:var(--mono);font-size:13px;color:#cfc9ff}
+.cell{display:flex;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.06)}
+.cell .run{flex-shrink:0;width:36px;height:36px;border-radius:8px;background:rgba(31,230,230,.15);display:flex;align-items:center;justify-content:center;color:var(--cyan);font-size:16px;transition:.2s}
+.cell .run:hover{background:var(--cyan);color:var(--navy-3)}
+.code{flex:1;font-family:var(--mono);font-size:13.5px;line-height:1.65;white-space:pre-wrap;color:#e9e6ff}
+.code .kw{color:#ff8fb3}.code .str{color:#9cf0a0}.code .fn{color:var(--cyan)}.code .cm{color:#7c79b8}
+.output{font-family:var(--mono);font-size:13px;color:var(--cyan-soft);padding:0 16px 14px 64px;min-height:8px}
+.output table{border-collapse:collapse;margin-top:8px;font-size:12px}
+.output td,.output th{border:1px solid rgba(255,255,255,.12);padding:4px 10px;color:#e9e6ff}
+.output th{color:var(--cyan)}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(31,230,230,.3);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* trivia */
+.trivia-wrap{max-width:840px;margin-top:4px}
+.tq{font-family:var(--display);font-size:clamp(20px,2.6vw,30px);line-height:1.15;margin-bottom:18px}
+.t-opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.t-opts{grid-template-columns:1fr}}
+.t-opt{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.18);border-radius:14px;padding:15px 18px;font-size:15.5px;text-align:left;transition:.18s;font-weight:500}
+.t-opt:hover:not(:disabled){border-color:var(--cyan);transform:translateY(-2px)}
+.t-opt.correct{background:rgba(40,224,168,.22);border-color:var(--good)}
+.t-opt.wrong{background:rgba(255,93,143,.2);border-color:var(--warn)}
+.t-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-family:var(--mono);font-size:14px;color:var(--cyan)}
+.t-feedback{margin-top:14px;font-size:15px;min-height:24px;color:#dcd7ff}
+.score-big{font-family:var(--display);font-size:clamp(40px,8vw,84px);color:var(--cyan);font-weight:700}
+
+/* chart chooser */
+.cc-opts{display:flex;gap:16px;flex-wrap:wrap;margin:16px 0}
+.cc-card{flex:1;min-width:150px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.18);border-radius:16px;padding:16px;text-align:center;transition:.2s}
+.cc-card:hover:not(.locked){border-color:var(--cyan);transform:translateY(-4px)}
+.cc-card.correct{border-color:var(--good);background:rgba(40,224,168,.16)}
+.cc-card.wrong{border-color:var(--warn);background:rgba(255,93,143,.14)}
+.cc-card svg{width:60px;height:50px;margin-bottom:6px}
+.cc-name{font-weight:600;font-size:15px}
+.cc-result{min-height:96px;font-size:15px;line-height:1.45}
+
+/* drive mock (slide colab) */
+.drive-mock{background:#fff;color:#202124;border-radius:14px;max-width:420px;padding:16px;font-family:var(--body);box-shadow:0 14px 40px rgba(0,0,0,.35)}
+.dm-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.dm-top .ic-box{width:26px;height:26px}
+.dm-top b{font-size:15px;color:#5f6368}
+.dm-new{position:relative;display:inline-flex}
+.dm-newbtn{display:inline-flex;align-items:center;gap:8px;box-shadow:0 1px 5px rgba(0,0,0,.25);border-radius:24px;padding:11px 20px;font-weight:600;color:#3c4043;background:#fff;font-size:15px}
+.dm-newbtn:hover{box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.dm-plus{color:#1a73e8;font-size:18px;font-weight:700}
+.dm-menu{position:absolute;top:52px;left:0;background:#fff;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.25);overflow:visible;min-width:240px;display:none;z-index:5}
+.dm-menu.open{display:block}
+.dm-item{padding:11px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;font-size:14px;color:#3c4043;position:relative}
+.dm-item:hover{background:#f1f3f4}
+.dm-item .arrow{margin-left:auto;color:#9aa0a6}
+.dm-item .ic-box{width:20px;height:20px}
+.dm-sub{position:absolute;top:0;left:100%;background:#fff;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.25);min-width:230px;display:none}
+.dm-item.has-sub.open .dm-sub{display:block}
+.dm-tip{margin-top:14px;font-size:14px;color:#cfc9ff;max-width:520px;line-height:1.5}
+.dm-success{margin-top:10px;color:var(--good);font-weight:600;font-family:var(--mono);font-size:14px;min-height:20px}
+
+/* ruleta */
+.wheel-wrap{display:flex;gap:34px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.wheel-stage{position:relative;width:290px;height:290px;flex-shrink:0}
+.wheel{width:290px;height:290px;border-radius:50%;border:6px solid var(--cyan);transition:transform 4.5s cubic-bezier(.17,.67,.12,.99);position:relative;box-shadow:0 0 30px rgba(31,230,230,.4)}
+.wheel-pointer{position:absolute;top:-8px;left:50%;transform:translateX(-50%);border-left:14px solid transparent;border-right:14px solid transparent;border-top:28px solid var(--cyan);z-index:2;filter:drop-shadow(0 0 6px var(--cyan))}
+.wheel-hub{position:absolute;top:50%;left:50%;width:54px;height:54px;border-radius:50%;background:var(--navy-3);border:3px solid var(--cyan);transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;font-size:22px;z-index:2}
+.challenge-box{flex:1;min-width:260px;background:rgba(255,255,255,.06);border:1px solid rgba(31,230,230,.35);border-radius:18px;padding:24px;min-height:170px}
+.challenge-box h4{font-family:var(--mono);color:var(--cyan);letter-spacing:2px;font-size:13px;text-transform:uppercase}
+.challenge-box p{font-size:18px;line-height:1.45;margin-top:10px}
+
+/* split */
+.split{display:grid;grid-template-columns:1fr 1fr;flex:1;margin:0 calc(-1*clamp(26px,4.6vw,68px));margin-bottom:calc(-1*clamp(26px,4.6vw,68px))}
+.split .left{padding:clamp(26px,4.6vw,68px);display:flex;flex-direction:column;justify-content:center}
+.split .right{padding:clamp(26px,4.6vw,68px);display:flex;flex-direction:column;justify-content:center}
+
+/* mensaje */
+#s-mensaje{align-items:center;justify-content:center;text-align:center}
+.quote-block{max-width:22ch}
+.quote{font-family:var(--display);font-weight:700;font-size:clamp(32px,5.6vw,74px);line-height:1.04;letter-spacing:-2px}
+.quote-sub{font-size:clamp(15px,2.1vw,23px);color:#dcd7ff;margin-top:16px;max-width:36ch;margin-left:auto;margin-right:auto;line-height:1.45}
+
+/* gracias */
+#s-gracias{align-items:center;justify-content:center;text-align:center}
+.gracias{font-family:var(--serif);font-weight:700;font-size:clamp(46px,10vw,116px);letter-spacing:4px;color:#fff;text-shadow:0 0 40px rgba(31,230,230,.3)}
+
+/* chrome */
+#progress{position:fixed;top:0;left:0;height:4px;background:var(--cyan);z-index:50;transition:width .4s;box-shadow:0 0 10px var(--cyan)}
+#nav{position:fixed;bottom:18px;right:20px;display:flex;align-items:center;gap:10px;z-index:50}
+.nav-btn{width:44px;height:44px;border-radius:50%;background:rgba(31,230,230,.14);color:var(--cyan);display:flex;align-items:center;justify-content:center;font-size:20px;border:1px solid rgba(31,230,230,.35);transition:.2s}
+.nav-btn:hover{background:var(--cyan);color:var(--navy-3)}
+#counter{position:fixed;bottom:24px;left:24px;font-family:var(--mono);font-size:13px;color:rgba(255,255,255,.6);z-index:50}
+.hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:12px;color:rgba(255,255,255,.5);z-index:5;animation:pulse 2.5s infinite;text-align:center}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:.8}}
+.confetti{position:fixed;width:9px;height:14px;z-index:999;pointer-events:none;top:-20px;border-radius:2px}
+
+.reveal{opacity:0;transform:translateY(16px)}
+.slide.active .reveal{animation:rise .6s ease forwards}
+.slide.active .reveal:nth-child(2){animation-delay:.07s}
+.slide.active .reveal:nth-child(3){animation-delay:.14s}
+.slide.active .reveal:nth-child(4){animation-delay:.21s}
+.slide.active .reveal:nth-child(5){animation-delay:.28s}
+.slide.active .reveal:nth-child(6){animation-delay:.35s}
+.slide.active .reveal:nth-child(7){animation-delay:.42s}
+@keyframes rise{to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="deck">
+
+  <!-- 1. PORTADA -->
+  <section class="slide active" id="s-portada">
+    <div class="cover-glow"></div>
+    <div class="sparkles" data-sparkles="40"></div>
+    <div class="logo-corner wit"><span class="w" style="font-size:14px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="cover-stack">
+      <div class="cover-kicker reveal">Taller práctico en vivo</div>
+      <h1 class="hero-title reveal"><span class="wand">✨</span> <span class="shine">Magia en tu Drive</span></h1>
+      <p class="hero-sub reveal">Tu primer asistente de Inteligencia Artificial, paso a paso</p>
+      <div class="cover-div reveal"></div>
+      <div class="speaker reveal">Oscar Iván Vargas Pineda<span class="role">Científico de Datos · Earth Innovation Institute</span></div>
+      <div class="cover-date reveal">17 de junio · 2026</div>
+      <div class="cover-tools tool-row reveal" style="justify-content:center">
+        <span class="lbl">HOY USAREMOS</span>
+        <span class="tool-chip"><span class="ic-box" data-icon="python"></span>Python</span>
+        <span class="tool-chip"><span class="ic-box" data-icon="drive"></span>Drive</span>
+        <span class="tool-chip"><span class="ic-box" data-icon="colab"></span>Colab</span>
+        <span class="tool-chip"><span class="ic-box" data-icon="gemini"></span>Gemini</span>
+      </div>
+      <a class="btn ghost sm reveal" href="https://trabajocientifico.github.io/enlaces/" target="_blank" rel="noopener" data-stop style="margin-top:6px">🔗 Conoce mis canales →</a>
+    </div>
+    <div class="hint">Presiona → o haz clic para avanzar · pulsa F para pantalla completa</div>
+  </section>
+
+  <!-- 2. OBJETIVO -->
+  <section class="slide" id="s-objetivo">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div><div class="kicker">El objetivo de hoy</div><h2 class="slide-title">Que la IA trabaje <span class="accent">para ti</span></h2></div></div>
+    <div class="fill">
+      <p class="lead reveal">Al terminar este taller vas a poder usar la inteligencia artificial como tu <strong>asistente personal</strong>: que lea tus archivos de Excel o CSV, los analice y te entregue gráficos listos, guardados directamente en tu Google Drive.</p>
+      <p class="lead reveal" style="margin-top:14px">Todo desde tu propia cuenta de Google. <span class="accent">Cero conocimientos previos de programación.</span></p>
+      <div class="cards" style="margin-top:24px">
+        <div class="card reveal"><div class="n">SIN INSTALAR NADA</div><h3>Solo tu navegador</h3><p>Google Colab vive en la nube. Abres una pestaña y ya tienes un laboratorio de datos.</p></div>
+        <div class="card reveal"><div class="n">SIN MIEDO AL CÓDIGO</div><h3>Tú diriges, la IA escribe</h3><p>Tú explicas qué quieres en español; Gemini convierte tus ideas en código.</p></div>
+        <div class="card reveal"><div class="n">CON TUS DATOS</div><h3>Archivos reales</h3><p>Esa hoja de Excel que ya tienes hoy se vuelve un gráfico en minutos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. AGENDA -->
+  <section class="slide" id="s-agenda">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div><div class="kicker">La ruta del truco</div><h2 class="slide-title">4 pasos hacia la <span class="accent">magia</span></h2></div></div>
+    <div class="fill">
+      <div class="cards">
+        <div class="card reveal"><div class="n">PASO 01</div><h3><span style="display:inline-block;width:22px;height:22px;vertical-align:-5px" class="ic-box" data-icon="colab"></span> Configuración exprés</h3><p>Abrir Colab desde tu Drive y conectarlos en menos de un minuto.</p></div>
+        <div class="card reveal"><div class="n">PASO 02</div><h3><span style="display:inline-block;width:22px;height:22px;vertical-align:-5px" class="ic-box" data-icon="gemini"></span> Diálogo con la IA</h3><p>Escribir prompts en Gemini para que genere el código por ti.</p></div>
+        <div class="card reveal"><div class="n">PASO 03</div><h3><span style="display:inline-block;width:22px;height:22px;vertical-align:-5px" class="ic-box" data-icon="excel"></span> Análisis de datos real</h3><p>Cargar y leer tus archivos cotidianos (Excel/CSV) desde Drive.</p></div>
+        <div class="card reveal"><div class="n">PASO 04</div><h3>✨ Creación visual</h3><p>Análisis automatizado y gráficos guardados en tus carpetas.</p></div>
+      </div>
+      <p class="lead reveal" style="margin-top:22px">Y entre cada paso… <span class="accent">jugamos</span>. Prepárate para participar 🙌</p>
+    </div>
+  </section>
+
+  <!-- 4. DINÁMICA: MITO O REALIDAD -->
+  <section class="slide" id="s-mito">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div><div class="kicker">Dinámica de apertura · ¡Vota en voz alta!</div><h2 class="slide-title">¿Mito o <span class="accent">realidad</span>?</h2></div></div>
+    <p class="lead reveal" style="margin-bottom:6px">Lee la frase, decide en grupo y toca tu respuesta. Veamos quién acierta. 🧠</p>
+    <div class="mr-wrap fill" id="mito" data-stop style="justify-content:center"></div>
+  </section>
+
+  <!-- 5. CONCEPTO -->
+  <section class="slide" id="s-concepto">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div><div class="kicker">La idea clave</div><h2 class="slide-title">¿Qué es un <span class="accent">asistente de IA</span>?</h2></div></div>
+    <div class="fill">
+      <p class="lead reveal">Imagina una asistente brillante que <strong>nunca se cansa</strong>, sabe programar y solo necesita que le expliques bien qué quieres. No adivina tu mente: responde a lo que le pides.</p>
+      <div class="cards reveal" style="margin-top:20px">
+        <div class="card"><div class="n">TÚ APORTAS</div><h3>El contexto y la meta</h3><p>Conoces tus datos y lo que necesitas mostrar. Esa es tu superpotencia.</p></div>
+        <div class="card"><div class="n">LA IA APORTA</div><h3>El código y la velocidad</h3><p>Traduce tu petición a instrucciones que el computador ejecuta al instante.</p></div>
+        <div class="card"><div class="n">EL SECRETO</div><h3>Un buen prompt</h3><p>Mientras más claro pides, mejor recibes. Lo practicaremos en un juego.</p></div>
+      </div>
+      <div class="tool-row reveal" style="margin-top:22px">
+        <span class="kicker" style="margin-right:4px">El equipo mágico:</span>
+        <span class="tool-chip"><span class="ic-box" data-icon="colab"></span>Colab · el laboratorio</span>
+        <span class="tool-chip"><span class="ic-box" data-icon="gemini"></span>Gemini · escribe el código</span>
+        <span class="tool-chip"><span class="ic-box" data-icon="python"></span>Python · el lenguaje</span>
+        <span class="tool-chip"><span class="ic-box" data-icon="drive"></span>Drive · tus archivos</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ABRIR COLAB DESDE DRIVE (NUEVA) -->
+  <section class="slide" id="s-abrir">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div><div class="kicker">Antes de empezar · Lo que nadie te dice</div><h2 class="slide-title">Abrir <span class="accent">Colab</span> desde tu Drive</h2></div></div>
+    <p class="lead reveal" style="margin-bottom:14px">Colab <strong>no viene activado por defecto</strong> en Drive. Sigue el menú: toca <em>“+ Nuevo”</em> y recórrelo. (También puedes ir directo a <span class="accent">colab.research.google.com</span>.)</p>
+    <div style="display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start">
+      <div class="drive-mock reveal" data-stop>
+        <div class="dm-top"><span class="ic-box" data-icon="drive"></span><b>Mi unidad — Google Drive</b></div>
+        <div class="dm-new">
+          <button class="dm-newbtn" id="dm-newbtn"><span class="dm-plus">+</span> Nuevo</button>
+          <div class="dm-menu" id="dm-menu">
+            <div class="dm-item">📄 Documento de Google</div>
+            <div class="dm-item">📊 Hoja de cálculo</div>
+            <div class="dm-item has-sub" id="dm-mas">⋯ Más <span class="arrow">▸</span>
+              <div class="dm-sub">
+                <div class="dm-item" id="dm-colab"><span class="ic-box" data-icon="colab"></span> Google Colaboratory</div>
+                <div class="dm-item" id="dm-connect">🔌 Conectar más aplicaciones</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dm-success" id="dm-success"></div>
+      </div>
+      <div class="reveal" style="max-width:430px">
+        <div class="cards" style="grid-template-columns:1fr;gap:12px;margin-top:0">
+          <div class="card"><div class="n">SI YA APARECE</div><h3>Nuevo ▸ Más ▸ Colaboratory</h3><p>Se abre un cuaderno en blanco listo para escribir tu primera celda.</p></div>
+          <div class="card"><div class="n">SI NO APARECE</div><h3>Conectar más aplicaciones</h3><p>Busca <strong>“Colaboratory”</strong>, pulsa <strong>Instalar</strong> y vuelve al menú Nuevo ▸ Más.</p></div>
+        </div>
+      </div>
+    </div>
+    <p class="dm-tip reveal" style="margin-top:8px">💡 Truco: una vez abierto, ve a <strong>Archivo ▸ Guardar una copia en Drive</strong> para que tu cuaderno quede siempre en tu unidad.</p>
+  </section>
+
+  <!-- 7. PASO 1 MOUNT -->
+  <section class="slide" id="s-paso1">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div><div class="kicker">Paso 01 · Configuración exprés</div><h2 class="slide-title">Conectar <span class="accent">Colab + Drive</span></h2></div></div>
+    <div class="fill">
+      <p class="lead reveal">Con el cuaderno ya abierto, "montas" tu Drive: pasa a ser una carpeta más del laboratorio. Pulsa ▶ para verlo en vivo.</p>
+      <div class="notebook reveal" data-stop>
+        <div class="nb-bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="nb-title">configuracion.ipynb</span><span class="ic-box" data-icon="colab"></span></div>
+        <div class="cell"><button class="run" data-run="mount">▶</button><div class="code"><span class="kw">from</span> google.colab <span class="kw">import</span> drive
+drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)</div></div>
+        <div class="output" id="out-mount"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. JUEGO: ORDENA -->
+  <section class="slide" id="s-orden">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div><div class="kicker">Juego · Ordena la magia</div><h2 class="slide-title">Pon los pasos en <span class="accent">orden</span></h2></div></div>
+    <p class="lead reveal" style="margin-bottom:10px">Arrastra las tarjetas (o usa ▲▼) hasta dejar el flujo correcto para abrir Colab y conectar tu Drive. Luego verifica.</p>
+    <div id="order-list" data-stop style="max-width:760px;display:flex;flex-direction:column;gap:10px"></div>
+    <div style="margin-top:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <button class="btn" id="order-check" data-stop>Verificar orden</button>
+      <button class="btn ghost sm" id="order-reset" data-stop>Mezclar de nuevo</button>
+      <span id="order-msg" style="font-family:var(--mono);font-size:15px"></span>
+    </div>
+  </section>
+
+  <!-- 9. PASO 2 PROMPT BUILDER -->
+  <section class="slide" id="s-paso2">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div><div class="kicker">Paso 02 · Diálogo con la IA · Juego</div><h2 class="slide-title">Construye tu <span class="accent">prompt mágico</span></h2></div></div>
+    <p class="lead reveal" style="margin-bottom:6px">Toca un ingrediente de cada columna y dáselo a <span class="ic-box" data-icon="gemini" style="display:inline-block;width:18px;height:18px;vertical-align:-4px"></span> Gemini. Mira subir tu "medidor de magia".</p>
+    <div class="pb-grid reveal" data-stop>
+      <div class="pb-col">
+        <h4>🎭 Rol</h4><div class="chip-row" data-cat="rol"></div>
+        <h4>📂 Contexto / datos</h4><div class="chip-row" data-cat="ctx"></div>
+        <h4>🎯 Tarea</h4><div class="chip-row" data-cat="task"></div>
+        <h4>📐 Formato de salida</h4><div class="chip-row" data-cat="fmt"></div>
+      </div>
+      <div class="pb-col">
+        <div class="prompt-canvas" id="prompt-canvas">Tu prompt aparecerá aquí…</div>
+        <div class="meter"><div class="meter-fill" id="pb-meter"></div></div>
+        <div class="meter-label" id="pb-label">Medidor de magia: 0%</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. PASO 3 READ -->
+  <section class="slide" id="s-paso3">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div><div class="kicker">Paso 03 · Análisis de datos real</div><h2 class="slide-title">Leer tu <span class="accent">Excel/CSV</span> desde Drive</h2></div></div>
+    <p class="lead reveal" style="margin-bottom:6px">El prompt que armaste produce un código así. Pulsa ▶ y observa la magia.</p>
+    <div class="notebook reveal" data-stop>
+      <div class="nb-bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="nb-title">analisis.ipynb</span><span class="ic-box" data-icon="python"></span></div>
+      <div class="cell"><button class="run" data-run="read">▶</button><div class="code"><span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="cm"># lee el archivo que está en tu Drive</span>
+ruta = <span class="str">'/content/drive/MyDrive/ventas_2026.xlsx'</span>
+df = pd.<span class="fn">read_excel</span>(ruta)
+df.<span class="fn">head</span>()</div></div>
+      <div class="output" id="out-read"></div>
+    </div>
+  </section>
+
+  <!-- 11. TRIVIA -->
+  <section class="slide" id="s-trivia">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div><div class="kicker">Trivia interactiva · ¡Puntúa!</div><h2 class="slide-title">Reto <span class="accent">relámpago</span></h2></div></div>
+    <div class="trivia-wrap fill" id="trivia" data-stop></div>
+  </section>
+
+  <!-- 12. PASO 4 CHART CHOOSER (3 rondas) -->
+  <section class="slide" id="s-paso4">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div><div class="kicker">Paso 04 · Creación visual · Juego</div><h2 class="slide-title">¿Cuándo usar cada <span class="accent">gráfico</span>?</h2></div></div>
+    <div class="fill" data-stop>
+      <div class="mr-meta" id="cc-meta"></div>
+      <p class="lead" id="cc-question" style="margin-bottom:2px;min-height:2.2em"></p>
+      <div class="cc-opts" id="cc-opts"></div>
+      <div class="cc-result" id="cc-result"></div>
+    </div>
+  </section>
+
+  <!-- 13. GUARDAR -->
+  <section class="slide" id="s-guardar">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div><div class="kicker">El cierre del truco</div><h2 class="slide-title">Y se guarda <span class="accent">solo</span> en tu Drive</h2></div></div>
+    <p class="lead reveal" style="margin-bottom:6px">Una línea más y tu gráfico queda archivado en tu carpeta. Pulsa ▶.</p>
+    <div class="notebook reveal" data-stop>
+      <div class="nb-bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="nb-title">analisis.ipynb</span><span class="ic-box" data-icon="python"></span></div>
+      <div class="cell"><button class="run" data-run="save">▶</button><div class="code"><span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+df.<span class="fn">groupby</span>(<span class="str">'mes'</span>)[<span class="str">'ventas'</span>].<span class="fn">sum</span>().<span class="fn">plot</span>(kind=<span class="str">'bar'</span>, color=<span class="str">'#1fe6e6'</span>)
+plt.<span class="fn">title</span>(<span class="str">'Ventas por mes 2026'</span>)
+plt.<span class="fn">savefig</span>(<span class="str">'/content/drive/MyDrive/grafico_ventas.png'</span>)</div></div>
+      <div class="output" id="out-save"></div>
+    </div>
+  </section>
+
+  <!-- 14. RULETA -->
+  <section class="slide" id="s-ruleta">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div><div class="kicker">Dinámica final · ¡A practicar!</div><h2 class="slide-title">La <span class="accent">ruleta</span> de retos</h2></div></div>
+    <p class="lead reveal" style="margin-bottom:4px">Gira la ruleta. El reto que salga lo intentamos juntas con la IA.</p>
+    <div class="wheel-wrap fill" data-stop>
+      <div class="wheel-stage reveal"><div class="wheel-pointer"></div><div class="wheel" id="wheel"></div><div class="wheel-hub">✨</div></div>
+      <div class="challenge-box reveal">
+        <h4>Tu reto</h4>
+        <p id="challenge-text">Pulsa “Girar” para recibir tu misión 🪄</p>
+        <button class="btn" id="spin-btn" style="margin-top:16px">Girar la ruleta</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15. WIT-h -->
+  <section class="slide white" id="s-with">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="split">
+      <div class="left" style="background:var(--navy);color:#fff;justify-content:center;align-items:center;text-align:center">
+        <div class="wit" style="font-size:44px"><span class="w">WIT-h<span style="color:var(--cyan)">✳</span></span><span class="col" style="font-size:.42em;color:var(--cyan-soft)">Women In Tech-Hub</span></div>
+      </div>
+      <div class="right" style="color:var(--ink)">
+        <div class="kicker" style="color:var(--navy)">Sigue la magia</div>
+        <h2 class="slide-title" style="color:var(--ink)">No te quedes con la duda</h2>
+        <p class="lead" style="color:#3a3380;margin-top:14px">Llévate tu cuaderno de Colab, tu prompt favorito y la comunidad. Aquí seguimos aprendiendo juntas.</p>
+        <ul style="margin-top:18px;line-height:2;font-size:17px;color:#2a2470;list-style:none">
+          <li>🔖 Guarda tu notebook: queda en tu Drive para siempre.</li>
+          <li>📊 Comparte tu primer gráfico en la comunidad.</li>
+          <li>🤝 Únete al hub: <strong>women-in-tech.org/colombia</strong></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16. MENSAJE -->
+  <section class="slide" id="s-mensaje">
+    <div class="sparkles" data-sparkles="30"></div>
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="quote-block">
+      <h2 class="quote reveal">Women in Tech es más que un <span class="accent">movimiento</span>;</h2>
+      <p class="quote-sub reveal">es una revolución silenciosa que necesita el respaldo de todas. Hoy diste tu primer paso con la IA. 🪄</p>
+    </div>
+  </section>
+
+  <!-- 17. GRACIAS -->
+  <section class="slide" id="s-gracias">
+    <div class="cover-glow"></div>
+    <div class="sparkles" data-sparkles="36"></div>
+    <div class="gracias reveal">GRACIAS</div>
+    <div class="wit reveal" style="font-size:clamp(38px,8vw,86px);margin-top:16px"><span class="w">W<span class="o">O</span>MEN</span><span class="w row2">in tech</span><span class="col">Colombia</span></div>
+    <a class="btn ghost reveal" href="https://trabajocientifico.github.io/enlaces/" target="_blank" rel="noopener" data-stop style="margin-top:26px">🔗 Mis canales · Trabajo Científico</a>
+    <button class="btn ghost sm reveal" id="restart" data-stop style="margin-top:12px">↺ Repetir la sesión</button>
+  </section>
+
+</div>
+
+<div id="counter">01</div>
+<div id="nav"><button class="nav-btn" id="prev" aria-label="Anterior">‹</button><button class="nav-btn" id="next" aria-label="Siguiente">›</button></div>
+
+<script>
+/* ===== ICONS ===== */
+const ICON={
+python:'<svg class="ic" viewBox="0 0 48 48"><path fill="#3776AB" d="M23.7 4c-9.6 0-9 4.2-9 4.2v4.3h9.2v1.3H11.1S5 13.1 5 22.9s5.3 9.4 5.3 9.4h3.2v-4.5s-.2-5.3 5.2-5.3h9.1s5 .1 5-4.9V9S38.6 4 23.7 4zM18.6 6.9c.9 0 1.6.7 1.6 1.6s-.7 1.6-1.6 1.6S17 9.4 17 8.5s.7-1.6 1.6-1.6z"/><path fill="#FFD43B" d="M24.3 44c9.6 0 9-4.2 9-4.2v-4.3H24v-1.3h12.9S43 34.9 43 25.1s-5.3-9.4-5.3-9.4h-3.2v4.5s.2 5.3-5.2 5.3h-9.1s-5-.1-5 4.9V39S9.4 44 24.3 44zM29.4 41.1c-.9 0-1.6-.7-1.6-1.6s.7-1.6 1.6-1.6 1.6.7 1.6 1.6-.7 1.6-1.6 1.6z"/></svg>',
+drive:'<svg class="ic" viewBox="0 0 87.3 78"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44c-.78 1.35-1.18 2.9-1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>',
+colab:'<svg class="ic" viewBox="0 0 50 30"><circle cx="16" cy="15" r="10.5" fill="none" stroke="#E8710A" stroke-width="6.5"/><circle cx="34" cy="15" r="10.5" fill="none" stroke="#F9AB00" stroke-width="6.5"/></svg>',
+gemini:'<svg class="ic" viewBox="0 0 48 48"><defs><linearGradient id="gemg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4796E3"/><stop offset=".52" stop-color="#9177C7"/><stop offset="1" stop-color="#D96570"/></linearGradient></defs><path fill="url(#gemg)" d="M24 1c.6 12.2 10.8 22.4 23 23-12.2.6-22.4 10.8-23 23-.6-12.2-10.8-22.4-23-23 12.2-.6 22.4-10.8 23-23z"/></svg>',
+folder:'<svg class="ic" viewBox="0 0 48 40"><path fill="#1fe6e6" d="M4 10c0-2.2 1.8-4 4-4h9l5 5h14c2.2 0 4 1.8 4 4v19c0 2.2-1.8 4-4 4H8c-2.2 0-4-1.8-4-4z"/><path fill="#86f2f2" opacity=".5" d="M4 16h40v17c0 2.2-1.8 4-4 4H8c-2.2 0-4-1.8-4-4z"/></svg>',
+pdf:'<svg class="ic" viewBox="0 0 40 48"><path fill="#fff" d="M6 2h20l10 10v32a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path fill="#cfc9ff" d="M26 2l10 10H28a2 2 0 0 1-2-2z"/><rect x="6" y="28" width="28" height="12" rx="2" fill="#E64A4A"/><text x="20" y="37" font-family="Arial" font-size="8" font-weight="bold" fill="#fff" text-anchor="middle">PDF</text></svg>',
+excel:'<svg class="ic" viewBox="0 0 40 48"><path fill="#fff" d="M6 2h20l10 10v32a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path fill="#cfc9ff" d="M26 2l10 10H28a2 2 0 0 1-2-2z"/><rect x="6" y="22" width="28" height="18" rx="2" fill="#1D8348"/><path d="M13 26l4 5-4 5h3l2.5-3.5L24 36h3l-4-5 4-5h-3l-2.5 3.5L16 26z" fill="#fff"/></svg>'
+};
+document.querySelectorAll('[data-icon]').forEach(el=>el.innerHTML=ICON[el.dataset.icon]||'');
+
+/* ===== NAV ===== */
+const slides=[...document.querySelectorAll('.slide')];
+let cur=0; const initSet=new Set();
+function show(i){
+  if(i<0||i>=slides.length)return;
+  slides[cur].classList.remove('active'); cur=i; slides[cur].classList.add('active');
+  document.getElementById('counter').textContent=String(cur+1).padStart(2,'0');
+  document.getElementById('progress').style.width=((cur+1)/slides.length*100)+'%';
+  if(!initSet.has(cur)){initSet.add(cur);onEnter(slides[cur].id);}
+}
+const next=()=>show(cur+1), prev=()=>show(cur-1);
+document.getElementById('next').onclick=next;
+document.getElementById('prev').onclick=prev;
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next()}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev()}
+  if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1);
+  if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+});
+document.getElementById('deck').addEventListener('click',e=>{
+  if(e.target.closest('button,a,input,[data-stop]'))return;
+  next();
+});
+document.getElementById('progress').style.width=(1/slides.length*100)+'%';
+
+/* ===== SPARKLES ===== */
+document.querySelectorAll('[data-sparkles]').forEach(box=>{
+  const n=+box.dataset.sparkles||26;
+  for(let i=0;i<n;i++){
+    const s=document.createElement('div');
+    const cross=Math.random()<.22, sz=cross?(8+Math.random()*8):(4+Math.random()*4);
+    s.className='spark'+(cross?' cross':'');
+    s.style.width=sz+'px';s.style.height=sz+'px';
+    s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
+    s.style.animationDelay=(Math.random()*4)+'s';
+    box.appendChild(s);
+  }
+});
+
+/* ===== CONFETTI ===== */
+function confetti(){
+  const colors=['#1fe6e6','#86f2f2','#ffffff','#28e0a8','#ff5d8f'];
+  for(let i=0;i<60;i++){
+    const c=document.createElement('div');c.className='confetti';
+    c.style.left=Math.random()*100+'vw';c.style.background=colors[i%colors.length];
+    const dur=2+Math.random()*1.5, rot=Math.random()*720;
+    c.animate([{transform:'translateY(-20px) rotate(0)',opacity:1},{transform:'translateY(105vh) rotate('+rot+'deg)',opacity:.9}],{duration:dur*1000,easing:'cubic-bezier(.3,.6,.4,1)'});
+    document.body.appendChild(c); setTimeout(()=>c.remove(),dur*1000);
+  }
+}
+
+/* ===== ENTER HOOKS ===== */
+function onEnter(id){
+  if(id==='s-mito')initMyth();
+  if(id==='s-abrir')initColabMenu();
+  if(id==='s-orden')initOrder();
+  if(id==='s-paso2')initPrompt();
+  if(id==='s-trivia')initTrivia();
+  if(id==='s-paso4')initChart();
+  if(id==='s-ruleta')initWheel();
+}
+
+/* ===== MITO O REALIDAD ===== */
+function initMyth(){
+  const items=[
+    {t:'La IA puede leer mi archivo de Excel y analizarlo por mí.',real:true,f:'✅ Realidad. Le das la ruta del archivo en Drive y ella lo lee, resume y grafica.'},
+    {t:'Necesito saber programar para usar la IA como asistente.',real:false,f:'🧚 Mito. Tú pides en español; la IA escribe el código por ti.'},
+    {t:'Google Colab se instala y ocupa espacio en mi computador.',real:false,f:'🧚 Mito. Colab vive en la nube; solo necesitas el navegador.'},
+    {t:'Puedo pedirle a la IA que guarde un gráfico directo en mi Drive.',real:true,f:'✅ Realidad. Con una línea (savefig a tu ruta) queda archivado en tu unidad.'},
+    {t:'La IA adivina lo que quiero aunque no le explique nada.',real:false,f:'🧚 Mito. Sin un buen prompt, adivina mal. Por eso practicaremos prompts.'},
+  ];
+  let idx=0,score=0; const box=document.getElementById('mito');
+  function render(){
+    if(idx>=items.length){
+      box.innerHTML='<div style="text-align:center"><div class="mr-meta" style="justify-content:center">Resultado</div><div class="score-big">'+score+'/'+items.length+'</div><p class="lead" style="margin:12px auto 0">'+(score>=4?'¡Mente de data-maga! 🪄':'¡Ya derribamos varios mitos juntas! 💫')+'</p><button class="btn" id="mr-again" style="margin-top:18px">Jugar otra vez</button></div>';
+      document.getElementById('mr-again').onclick=()=>{idx=0;score=0;render();}; if(score>=4)confetti(); return;
+    }
+    const it=items[idx];
+    box.innerHTML='<div class="mr-wrap"><div class="mr-meta"><span>Frase '+(idx+1)+'/'+items.length+'</span><span>⭐ '+score+'</span></div><div class="mr-stmt">“'+it.t+'”</div><div class="mr-opts"><button class="mr-opt" data-v="myth">🧚 Mito</button><button class="mr-opt" data-v="real">✅ Realidad</button></div><div class="mr-fb" id="mr-fb"></div></div>';
+    box.querySelectorAll('.mr-opt').forEach(b=>b.onclick=()=>{
+      const chose=b.dataset.v==='real';
+      box.querySelectorAll('.mr-opt').forEach(x=>x.disabled=true);
+      const correctBtn=[...box.querySelectorAll('.mr-opt')].find(x=>(x.dataset.v==='real')===it.real);
+      if(chose===it.real){b.classList.add('correct');score++;confetti();}else{b.classList.add('wrong');correctBtn.classList.add('correct');}
+      const fb=document.getElementById('mr-fb'); fb.innerHTML=it.f+'<br>';
+      const nx=document.createElement('button');nx.className='btn';nx.style.marginTop='10px';
+      nx.textContent=idx===items.length-1?'Ver resultado':'Siguiente →';
+      nx.onclick=()=>{idx++;render();}; fb.appendChild(nx);
+    });
+  }
+  render();
+}
+
+/* ===== COLAB MENU (slide abrir) ===== */
+function initColabMenu(){
+  const menu=document.getElementById('dm-menu'), mas=document.getElementById('dm-mas'), succ=document.getElementById('dm-success');
+  succ.textContent='';
+  document.getElementById('dm-newbtn').onclick=e=>{e.stopPropagation();menu.classList.toggle('open');mas.classList.remove('open');};
+  mas.onclick=e=>{e.stopPropagation();mas.classList.toggle('open');};
+  document.getElementById('dm-colab').onclick=e=>{e.stopPropagation();succ.style.color='var(--good)';succ.textContent='✨ ¡Se abre un cuaderno de Colab nuevo!';menu.classList.remove('open');confetti();};
+  document.getElementById('dm-connect').onclick=e=>{e.stopPropagation();succ.style.color='var(--cyan)';succ.textContent='🔌 Busca "Colaboratory" → Instalar → vuelve a Nuevo ▸ Más';};
+}
+
+/* ===== ORDER GAME ===== */
+function initOrder(){
+  const correct=[
+    {t:'Abrir Google Drive y entrar a "+ Nuevo ▸ Más ▸ Colaboratory"',ic:'colab'},
+    {t:'Guardar una copia del cuaderno en tu Drive',ic:'drive'},
+    {t:'Escribir: from google.colab import drive',ic:'python'},
+    {t:'Ejecutar drive.mount() y autorizar tu cuenta',ic:'colab'},
+    {t:'Leer tus archivos desde /content/drive/MyDrive',ic:'excel'},
+  ];
+  let arr; const list=document.getElementById('order-list'), msg=document.getElementById('order-msg');
+  function shuffle(){arr=correct.map((x,i)=>i).sort(()=>Math.random()-.5);if(arr.join()===correct.map((_,i)=>i).join())arr.reverse();}
+  function render(){
+    list.innerHTML='';
+    arr.forEach((origIdx,pos)=>{
+      const step=correct[origIdx];
+      const row=document.createElement('div'); row.draggable=true;
+      row.style.cssText='display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:11px 14px;cursor:grab';
+      row.innerHTML='<span style="font-family:var(--mono);color:var(--cyan);font-weight:600;width:18px">'+(pos+1)+'</span><span class="ic-box" style="width:24px;height:24px;flex-shrink:0">'+ICON[step.ic]+'</span><span style="flex:1;font-size:14.5px">'+step.t+'</span>';
+      const up=document.createElement('button');up.textContent='▲';up.className='nav-btn';up.style.cssText='width:32px;height:32px;font-size:12px';
+      const dn=document.createElement('button');dn.textContent='▼';dn.className='nav-btn';dn.style.cssText='width:32px;height:32px;font-size:12px';
+      up.onclick=()=>{if(pos>0){[arr[pos-1],arr[pos]]=[arr[pos],arr[pos-1]];render();}};
+      dn.onclick=()=>{if(pos<arr.length-1){[arr[pos+1],arr[pos]]=[arr[pos],arr[pos+1]];render();}};
+      row.addEventListener('dragstart',e=>{e.dataTransfer.setData('text',pos);row.style.opacity=.4;});
+      row.addEventListener('dragend',()=>row.style.opacity=1);
+      row.addEventListener('dragover',e=>e.preventDefault());
+      row.addEventListener('drop',e=>{e.preventDefault();const from=+e.dataTransfer.getData('text');const it=arr.splice(from,1)[0];arr.splice(pos,0,it);render();});
+      row.append(up,dn); list.appendChild(row);
+    });
+  }
+  function start(){shuffle();render();msg.textContent='';}
+  document.getElementById('order-check').onclick=()=>{
+    const ok=arr.join()===correct.map((_,i)=>i).join();
+    if(ok){msg.style.color='var(--good)';msg.textContent='✅ ¡Perfecto! Ese es el flujo completo.';confetti();}
+    else{msg.style.color='var(--warn)';msg.textContent='🤔 Casi… recuerda: primero abrir Colab, al final leer los datos.';}
+  };
+  document.getElementById('order-reset').onclick=start;
+  start();
+}
+
+/* ===== PROMPT BUILDER ===== */
+function initPrompt(){
+  const data={
+    rol:['Eres un analista de datos','Eres mi profe paciente','—'],
+    ctx:['tengo un Excel de ventas en mi Drive','con columnas mes y ventas','—'],
+    task:['analiza las ventas por mes','encuentra el mejor mes','—'],
+    fmt:['y genera un gráfico de barras','explica el código línea por línea','—'],
+  };
+  const sel={rol:null,ctx:null,task:null,fmt:null};
+  document.querySelectorAll('#s-paso2 .chip-row').forEach(row=>{
+    const cat=row.dataset.cat;row.innerHTML='';
+    data[cat].forEach(txt=>{
+      const c=document.createElement('button');c.className='chip';c.textContent=txt;
+      c.onclick=()=>{row.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');sel[cat]=txt==='—'?null:txt;update();};
+      row.appendChild(c);
+    });
+  });
+  let donced=false;
+  function update(){
+    const parts=[sel.rol,sel.ctx,sel.task,sel.fmt].filter(Boolean);
+    document.getElementById('prompt-canvas').textContent=parts.length?parts.join(' ')+'.':'Tu prompt aparecerá aquí…';
+    const score=Math.round(parts.length/4*100);
+    document.getElementById('pb-meter').style.width=score+'%';
+    let lbl='Medidor de magia: '+score+'%';
+    if(score===100)lbl+=' 🪄 ¡Prompt poderoso!'; else if(score>=50)lbl+=' · vas bien';
+    document.getElementById('pb-label').textContent=lbl;
+    if(score===100&&!donced){donced=true;confetti();} if(score<100)donced=false;
+  }
+}
+
+/* ===== COLAB RUN SIMS ===== */
+document.querySelectorAll('.run').forEach(b=>b.addEventListener('click',()=>runCell(b.dataset.run)));
+function runCell(kind){
+  if(kind==='mount'){
+    const o=document.getElementById('out-mount');
+    o.innerHTML='<span class="spinner"></span> Conectando con Google Drive…';
+    setTimeout(()=>{o.innerHTML='✅ <span style="color:var(--good)">Mounted at /content/drive</span><br>Tu Drive ya es una carpeta del laboratorio 🪄';confetti();},1300);
+  }
+  if(kind==='read'){
+    const o=document.getElementById('out-read');
+    o.innerHTML='<span class="spinner"></span> Leyendo ventas_2026.xlsx desde tu Drive…';
+    setTimeout(()=>{o.innerHTML='<div style="display:flex;align-items:center;gap:8px"><span class="ic-box" style="width:18px;height:18px">'+ICON.excel+'</span>✅ 120 filas cargadas</div><table><tr><th>mes</th><th>ventas</th><th>region</th></tr><tr><td>Enero</td><td>4.200</td><td>Andina</td></tr><tr><td>Febrero</td><td>5.100</td><td>Caribe</td></tr><tr><td>Marzo</td><td>6.350</td><td>Pacífico</td></tr></table>';},1300);
+  }
+  if(kind==='save'){
+    const o=document.getElementById('out-save');
+    o.innerHTML='<span class="spinner"></span> Generando gráfico y guardando…';
+    setTimeout(()=>{o.innerHTML='<div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap"><svg width="180" height="110" viewBox="0 0 180 110"><line x1="20" y1="95" x2="170" y2="95" stroke="#7c79b8"/><rect x="35" y="55" width="22" height="40" fill="#1fe6e6"><animate attributeName="height" from="0" to="40" dur=".6s" fill="freeze"/><animate attributeName="y" from="95" to="55" dur=".6s" fill="freeze"/></rect><rect x="70" y="40" width="22" height="55" fill="#1fe6e6"><animate attributeName="height" from="0" to="55" dur=".7s" fill="freeze"/><animate attributeName="y" from="95" to="40" dur=".7s" fill="freeze"/></rect><rect x="105" y="25" width="22" height="70" fill="#1fe6e6"><animate attributeName="height" from="0" to="70" dur=".8s" fill="freeze"/><animate attributeName="y" from="95" to="25" dur=".8s" fill="freeze"/></rect><rect x="140" y="50" width="22" height="45" fill="#86f2f2"><animate attributeName="height" from="0" to="45" dur=".9s" fill="freeze"/><animate attributeName="y" from="95" to="50" dur=".9s" fill="freeze"/></rect></svg><div style="display:flex;align-items:center;gap:10px"><span class="ic-box" style="width:30px;height:30px">'+ICON.folder+'</span><div>✅ <span style="color:var(--good)">Guardado en</span><br>MyDrive/grafico_ventas.png<br><span style="color:var(--cyan-soft)">¡Ya está en tu Drive! 🎉</span></div></div></div>';confetti();},1500);
+  }
+}
+
+/* ===== TRIVIA ===== */
+function initTrivia(){
+  const qs=[
+    {q:'¿Necesitas instalar algo en tu computador para usar Google Colab?',o:['Sí, varios programas','No, vive en la nube'],a:1,f:'Colab corre en el navegador, en los servidores de Google.'},
+    {q:'¿Quién escribe el código cuando usas un asistente de IA?',o:['La IA, según lo que le pides','Tú, línea por línea'],a:0,f:'Tú diriges con un buen prompt; la IA escribe.'},
+    {q:'Para leer un Excel en Python, una librería muy usada es…',o:['pandas','pijamas'],a:0,f:'pandas es la caja de herramientas para datos en tablas.'},
+    {q:'Tu archivo en Drive se lee desde la ruta…',o:['/content/drive/MyDrive/...','C:/Mis documentos/...'],a:0,f:'Tras montar Drive, tus archivos viven en /content/drive/MyDrive.'},
+    {q:'¿Dónde queda el gráfico al usar savefig con tu ruta de Drive?',o:['Se pierde al cerrar','En tu Google Drive'],a:1,f:'Queda en tu carpeta de Drive, listo para compartir.'},
+  ];
+  let idx=0,score=0; const box=document.getElementById('trivia');
+  function render(){
+    if(idx>=qs.length){
+      box.innerHTML='<div style="text-align:center"><div class="t-meta" style="justify-content:center">Resultado final</div><div class="score-big">'+score+'/'+qs.length+'</div><p class="lead" style="margin:14px auto 0">'+(score===qs.length?'¡Magia perfecta! 🪄✨':score>=3?'¡Muy bien! Ya piensas como una data-maga. 💫':'¡Buen intento! Repasemos juntas. 🙌')+'</p><button class="btn" id="t-again" style="margin-top:20px">Jugar otra vez</button></div>';
+      document.getElementById('t-again').onclick=()=>{idx=0;score=0;render();}; if(score>=3)confetti(); return;
+    }
+    const q=qs[idx];
+    box.innerHTML='<div class="t-meta"><span>Pregunta '+(idx+1)+'/'+qs.length+'</span><span>⭐ '+score+'</span></div><div class="tq">'+q.q+'</div><div class="t-opts" id="t-opts"></div><div class="t-feedback" id="t-fb"></div>';
+    const opts=document.getElementById('t-opts');
+    q.o.forEach((t,i)=>{
+      const b=document.createElement('button');b.className='t-opt';b.textContent=t;
+      b.onclick=()=>{
+        opts.querySelectorAll('.t-opt').forEach(x=>x.disabled=true);
+        if(i===q.a){b.classList.add('correct');score++;confetti();}else{b.classList.add('wrong');opts.children[q.a].classList.add('correct');}
+        const fb=document.getElementById('t-fb'); fb.innerHTML='💡 '+q.f+'<br>';
+        const nx=document.createElement('button');nx.className='btn';nx.style.marginTop='12px';
+        nx.textContent=idx===qs.length-1?'Ver resultado':'Siguiente →';nx.onclick=()=>{idx++;render();};fb.appendChild(nx);
+      };
+      opts.appendChild(b);
+    });
+  }
+  render();
+}
+
+/* ===== CHART CHOOSER (3 rondas) ===== */
+function initChart(){
+  const svgs={
+    bar:'<svg viewBox="0 0 60 50"><rect x="6" y="28" width="9" height="18" fill="#1fe6e6"/><rect x="20" y="18" width="9" height="28" fill="#1fe6e6"/><rect x="34" y="10" width="9" height="36" fill="#1fe6e6"/><rect x="48" y="24" width="9" height="22" fill="#86f2f2"/></svg>',
+    line:'<svg viewBox="0 0 60 50"><polyline points="6,38 20,22 34,30 48,10" fill="none" stroke="#1fe6e6" stroke-width="3"/><circle cx="48" cy="10" r="3" fill="#86f2f2"/></svg>',
+    pie:'<svg viewBox="0 0 60 50"><circle cx="30" cy="25" r="20" fill="#1fe6e6"/><path d="M30 25 L30 5 A20 20 0 0 1 47 35 Z" fill="#86f2f2"/></svg>'
+  };
+  const names={bar:'Barras',line:'Líneas',pie:'Pastel'};
+  const rounds=[
+    {q:'Quieres comparar las ventas de cada mes del año.',a:'bar',why:'<strong>Barras</strong> → para <strong>comparar categorías o grupos</strong> (los meses) de un vistazo.'},
+    {q:'Quieres ver cómo cambió el caudal del río a lo largo de 12 meses.',a:'line',why:'<strong>Líneas</strong> → para mostrar una <strong>tendencia o evolución en el tiempo</strong>.'},
+    {q:'Quieres mostrar qué porcentaje del presupuesto va a cada área.',a:'pie',why:'<strong>Pastel</strong> → para ver <strong>proporciones de un todo</strong> (pocas categorías).'}
+  ];
+  let r=0, correctCount=0;
+  const meta=document.getElementById('cc-meta'), ques=document.getElementById('cc-question'),
+        wrap=document.getElementById('cc-opts'), res=document.getElementById('cc-result');
+  function render(){
+    if(r>=rounds.length){
+      meta.textContent='';
+      ques.innerHTML='<span class="accent" style="font-family:var(--display);font-size:1.3em">Resumen mágico ✨</span>';
+      wrap.innerHTML='<div class="cc-card locked">'+svgs.bar+'<div class="cc-name">Barras</div><p style="font-size:12.5px;color:#cfc9ff;margin-top:6px">Comparar grupos</p></div><div class="cc-card locked">'+svgs.line+'<div class="cc-name">Líneas</div><p style="font-size:12.5px;color:#cfc9ff;margin-top:6px">Tendencia en el tiempo</p></div><div class="cc-card locked">'+svgs.pie+'<div class="cc-name">Pastel</div><p style="font-size:12.5px;color:#cfc9ff;margin-top:6px">Proporción de un todo</p></div>';
+      res.innerHTML='<p class="lead">Acertaste <span class="accent">'+correctCount+'/'+rounds.length+'</span>. Ya sabes pedirle a la IA el gráfico correcto según tu pregunta. 🪄</p>';
+      if(correctCount===rounds.length)confetti(); return;
+    }
+    const rd=rounds[r];
+    meta.textContent='Ronda '+(r+1)+'/'+rounds.length+'   ·   Acertadas: '+correctCount;
+    ques.innerHTML='🎯 '+rd.q+' <strong>¿Qué gráfico pides?</strong>';
+    wrap.innerHTML=''; res.innerHTML='';
+    ['bar','line','pie'].forEach(k=>{
+      const c=document.createElement('button');c.className='cc-card';
+      c.innerHTML=svgs[k]+'<div class="cc-name">'+names[k]+'</div>';
+      c.onclick=()=>{
+        wrap.querySelectorAll('.cc-card').forEach(x=>{x.classList.add('locked');x.disabled=true;});
+        if(k===rd.a){c.classList.add('correct');correctCount++;confetti();res.innerHTML='<p class="lead" style="color:var(--good)">✅ '+rd.why+'</p>';}
+        else{c.classList.add('wrong');[...wrap.children].find(x=>x.querySelector('.cc-name').textContent===names[rd.a]).classList.add('correct');res.innerHTML='<p class="lead">Casi. '+rd.why+'</p>';}
+        const nx=document.createElement('button');nx.className='btn';nx.style.marginTop='12px';
+        nx.textContent=r===rounds.length-1?'Ver resumen':'Siguiente ronda →';nx.onclick=()=>{r++;render();};
+        res.appendChild(nx);
+      };
+      wrap.appendChild(c);
+    });
+  }
+  render();
+}
+
+/* ===== RULETA ===== */
+function initWheel(){
+  const challenges=[
+    'Pide a la IA un gráfico de torta de tus gastos del mes',
+    'Pide que te explique tu código como si tuvieras 10 años',
+    'Carga un CSV y pide el promedio de una columna',
+    'Pide un gráfico de líneas de una tendencia en el tiempo',
+    'Pide que limpie las filas vacías de tu tabla',
+    'Pide un resumen estadístico con df.describe()'
+  ];
+  const wheel=document.getElementById('wheel'), n=challenges.length, seg=360/n;
+  const colors=['#1fe6e6','#16097f','#86f2f2','#1c0bb0','#28e0a8','#0d0556'];
+  let stops=[];for(let i=0;i<n;i++)stops.push(colors[i%colors.length]+' '+(i*seg)+'deg '+((i+1)*seg)+'deg');
+  wheel.style.background='conic-gradient('+stops.join(',')+')';
+  let rot=0,spinning=false;
+  document.getElementById('spin-btn').onclick=()=>{
+    if(spinning)return;spinning=true;
+    const pick=Math.floor(Math.random()*n);
+    rot+=360*4+(360-(pick*seg+seg/2)); wheel.style.transform='rotate('+rot+'deg)';
+    document.getElementById('challenge-text').textContent='Girando… 🪄';
+    setTimeout(()=>{document.getElementById('challenge-text').textContent=challenges[pick];spinning=false;confetti();},4600);
+  };
+}
+
+document.getElementById('restart').onclick=()=>{initSet.clear();show(0);};
+</script>
+</body>
+</html>
