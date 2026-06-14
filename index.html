@@ -259,6 +259,111 @@ a{color:var(--cyan)}
 .slide.active .reveal:nth-child(6){animation-delay:.35s}
 .slide.active .reveal:nth-child(7){animation-delay:.42s}
 @keyframes rise{to{opacity:1;transform:none}}
+
+/* ===== PRACTICAL STEPS (prompt + visual) ===== */
+.step-pill{display:inline-block;color:var(--navy-3);background:var(--cyan);font-weight:700;border-radius:7px;padding:2px 10px;font-size:11px;letter-spacing:1.5px;margin-right:10px;font-family:var(--mono)}
+.practical{display:grid;grid-template-columns:1.05fr auto 1fr;gap:22px;align-items:stretch;margin-top:14px;min-height:0}
+@media(max-width:900px){.practical{grid-template-columns:1fr}}
+.prompt-card,.visual-card{border:1px solid rgba(31,230,230,.28);border-radius:18px;padding:20px;display:flex;flex-direction:column;min-height:0;position:relative;overflow:hidden}
+.prompt-card{background:linear-gradient(180deg,#100750,#0a0436)}
+.visual-card{background:radial-gradient(120% 120% at 70% 0%,rgba(31,230,230,.08),transparent 60%),rgba(255,255,255,.04)}
+.card-label{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#9aa0d0;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card-label .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+.card-label .dot.soft{background:var(--cyan-soft);box-shadow:0 0 10px var(--cyan-soft)}
+.prompt-text{font-family:var(--mono);font-size:clamp(13px,1.25vw,15px);line-height:1.75;color:#eae6ff;flex:1;overflow:auto}
+.prompt-text code{color:var(--cyan);background:rgba(31,230,230,.1);padding:1px 6px;border-radius:5px}
+.fill-edit{color:var(--navy-3);background:var(--cyan);border-radius:6px;padding:1px 8px;font-weight:700;cursor:text;outline:none;transition:.18s;display:inline-block}
+.fill-edit:focus{background:#fff;box-shadow:0 0 0 3px rgba(31,230,230,.45)}
+.fill-edit:hover{background:var(--cyan-soft)}
+.prompt-actions{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+.copy-prompt{font-family:var(--mono);font-size:12px;border:1px solid rgba(31,230,230,.3);background:rgba(31,230,230,.08);color:#fff;padding:9px 15px;border-radius:10px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:6px}
+.copy-prompt:hover{background:rgba(31,230,230,.18);border-color:var(--cyan)}
+.copy-prompt.ok{background:rgba(40,224,168,.22);border-color:var(--good);color:var(--good)}
+.copy-hint{font-size:12px;color:#9aa0d0}
+.conjure{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:46px}
+.conjure .spark{font-size:22px;color:var(--cyan);filter:drop-shadow(0 0 8px var(--cyan));animation:p-twinkle 2.4s ease-in-out infinite}
+.conjure .line{width:2px;flex:1;min-height:60px;background:linear-gradient(var(--cyan),var(--cyan-soft));border-radius:2px;position:relative;overflow:hidden}
+.conjure .line::after{content:"";position:absolute;left:-1px;right:-1px;height:30%;background:#fff;opacity:.7;filter:blur(2px);animation:p-flow 2.2s linear infinite}
+.conjure .arrow{color:var(--cyan-soft);font-size:20px}
+@keyframes p-twinkle{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.18);opacity:1}}
+@keyframes p-flow{0%{top:-30%}100%{top:130%}}
+@media(max-width:900px){.conjure{flex-direction:row;width:auto;height:auto;padding:6px 0}.conjure .line{width:60px;height:2px;flex:none;min-height:0}.conjure .arrow{transform:rotate(90deg)}}
+.scene{flex:1;display:flex;align-items:center;justify-content:center;position:relative;min-height:240px}
+.why-note{margin-top:14px;font-size:14px;color:#cfc9ff;display:flex;gap:9px;align-items:flex-start;line-height:1.45}
+.why-note b{color:var(--cyan)}
+
+/* 1 · table animation */
+.p-tbl{width:100%;max-width:340px;border:1px solid rgba(31,230,230,.28);border-radius:12px;overflow:hidden;background:#0a0436;position:relative}
+.p-tbl .th{display:grid;grid-template-columns:1.4fr 1fr 1fr;background:rgba(31,230,230,.13);font-family:var(--mono);font-size:11px;color:var(--cyan)}
+.p-tbl .tr{display:grid;grid-template-columns:1.4fr 1fr 1fr;border-top:1px solid rgba(31,230,230,.16);font-family:var(--mono);font-size:11px;color:#fff}
+.p-tbl .th span,.p-tbl .tr span{padding:8px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p-tbl .tr.hot{background:rgba(31,230,230,.08)}
+.slide.active .p-tbl .th,.slide.active .p-tbl .tr{animation:p-drop .5s both}
+.slide.active .p-tbl .tr:nth-child(2){animation-delay:.15s}
+.slide.active .p-tbl .tr:nth-child(3){animation-delay:.3s}
+.slide.active .p-tbl .tr:nth-child(4){animation-delay:.45s}
+.slide.active .p-tbl .tr:nth-child(5){animation-delay:.6s}
+.badge-3{position:absolute;right:8px;top:8px;font-family:var(--mono);font-size:10px;color:var(--navy-3);background:var(--cyan);padding:4px 9px;border-radius:99px;opacity:0;font-weight:700}
+.slide.active .badge-3{animation:p-pop .4s .7s both}
+@keyframes p-drop{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+@keyframes p-pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+
+/* 2 · scatter */
+.p-scatter{width:100%;max-width:340px;height:230px}
+.p-scatter circle{opacity:0}
+.slide.active .p-scatter circle{animation:p-fadeUp .45s both}
+.slide.active .p-scatter .tline{stroke-dasharray:320;stroke-dashoffset:320;animation:p-draw 1s .7s both}
+@keyframes p-fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:.95;transform:none}}
+@keyframes p-draw{to{stroke-dashoffset:0}}
+
+/* 3 · funnel */
+.p-funnel{position:relative;width:260px;height:230px}
+.chip-fall{position:absolute;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:var(--navy-3);font-weight:700;opacity:0}
+.slide.active .chip-fall{animation:p-fall 1.4s both}
+@keyframes p-fall{0%{opacity:0;transform:translateY(-40px)}20%{opacity:1}100%{opacity:1;transform:translateY(150px)}}
+.slide.active .chip-fall.miss{animation:p-fallmiss 1.4s both}
+@keyframes p-fallmiss{0%{opacity:0;transform:translateY(-40px)}18%{opacity:1;transform:translateY(20px)}55%{opacity:.5;transform:translateY(95px) scale(.6) rotate(40deg)}100%{opacity:0;transform:translateY(120px) scale(.2) rotate(90deg)}}
+.keep-stack{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column-reverse;gap:4px}
+.keep-stack .k{width:120px;height:14px;border-radius:4px;background:var(--cyan);opacity:0;box-shadow:0 0 8px rgba(31,230,230,.35)}
+.slide.active .keep-stack .k{animation:p-pop .4s both}
+.slide.active .keep-stack .k:nth-child(1){animation-delay:1s}
+.slide.active .keep-stack .k:nth-child(2){animation-delay:1.15s}
+.slide.active .keep-stack .k:nth-child(3){animation-delay:1.3s}
+
+/* 4 · split files */
+.file-wrap{position:relative;width:320px;height:240px;display:flex;align-items:center;justify-content:center}
+.p-doc{width:54px;height:70px;border-radius:8px;background:linear-gradient(160deg,#fff,#d5e8ff);position:relative;box-shadow:0 8px 20px -8px rgba(0,0,0,.6)}
+.p-doc::before{content:"";position:absolute;top:0;right:0;border-width:0 14px 14px 0;border-style:solid;border-color:transparent var(--navy-2) transparent transparent}
+.p-doc .lab{position:absolute;bottom:6px;left:6px;right:6px;font-family:var(--mono);font-size:8px;color:#0d0556;text-align:center;font-weight:700}
+.p-doc .bars{position:absolute;top:14px;left:8px;right:8px;display:flex;flex-direction:column;gap:4px}
+.p-doc .bars i{height:3px;background:#8fb6e6;border-radius:2px}
+.p-doc .bars i:nth-child(2){width:70%}
+.p-doc.src{position:absolute;z-index:3}
+.p-doc.out{position:absolute;opacity:0}
+.slide.active .p-doc.src{animation:p-pulse 2.4s ease-in-out infinite}
+@keyframes p-pulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.slide.active .p-doc.out{animation:p-fan .8s both}
+@keyframes p-fan{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+
+/* 5 · folder backup */
+.p-folder{width:120px;height:88px;border-radius:6px 12px 12px 12px;background:linear-gradient(160deg,var(--cyan),#0eb8b8);position:relative;box-shadow:0 10px 24px -10px rgba(0,0,0,.7)}
+.p-folder::before{content:"";position:absolute;top:-12px;left:0;width:52px;height:16px;border-radius:6px 6px 0 0;background:#0eb8b8}
+.p-folder .ftag{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:9px;color:#003333;font-weight:700;line-height:1.2}
+.p-shield{position:absolute;top:-10px;right:-10px;width:30px;height:30px;border-radius:50%;background:var(--good);display:grid;place-items:center;color:#003;font-weight:800;font-size:15px;opacity:0;box-shadow:0 0 12px rgba(40,224,168,.6)}
+.slide.active .p-shield{animation:p-pop .5s 1.1s both}
+
+/* 6 · workbook with sheets */
+.p-book{position:relative;width:160px;height:180px}
+.p-sheet{position:absolute;width:130px;height:160px;border-radius:10px;background:linear-gradient(160deg,#fff,#e7f5ff);border:1px solid #b9d9f0;box-shadow:0 8px 20px -10px rgba(0,0,0,.5);opacity:0}
+.p-sheet .stab{position:absolute;top:-1px;left:14px;background:var(--cyan);color:var(--navy-3);font-family:var(--mono);font-size:8px;padding:3px 7px;border-radius:6px 6px 0 0;transform:translateY(-100%);font-weight:700}
+.p-sheet .grid{position:absolute;inset:18px 12px 12px;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:9px;gap:4px}
+.p-sheet .grid i{background:#cce6f7;border-radius:2px}
+.slide.active .p-sheet{animation:p-fanUp .6s both}
+@keyframes p-fanUp{from{opacity:0;transform:translate(0,20px)}to{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .p-tbl .th,.p-tbl .tr,.p-scatter circle,.p-scatter .tline,.chip-fall,.keep-stack .k,.p-doc.out,.p-doc.src,.p-shield,.p-sheet,.badge-3{animation:none!important;opacity:1!important;stroke-dashoffset:0!important;transform:none!important}
+}
 </style>
 </head>
 <body>
@@ -418,20 +523,7 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)</
     </div>
   </section>
 
-  <!-- 9. ORDENA -->
-  <section class="slide" id="s-orden">
-    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
-    <div class="topbar"><div><div class="kicker">Juego · Ordena la magia</div><h2 class="slide-title">Pon los pasos en <span class="accent">orden</span></h2></div></div>
-    <p class="lead reveal" style="margin-bottom:10px">Arrastra las tarjetas (o usa ▲▼) hasta dejar el flujo correcto para abrir Colab y conectar tu Drive. Luego verifica.</p>
-    <div id="order-list" data-stop style="max-width:760px;display:flex;flex-direction:column;gap:10px"></div>
-    <div style="margin-top:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-      <button class="btn" id="order-check" data-stop>Verificar orden</button>
-      <button class="btn ghost sm" id="order-reset" data-stop>Mezclar de nuevo</button>
-      <span id="order-msg" style="font-family:var(--mono);font-size:15px"></span>
-    </div>
-  </section>
-
-  <!-- 10. PASO 2 PROMPT -->
+  <!-- 9. PASO 2 PROMPT -->
   <section class="slide" id="s-paso2">
     <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
     <div class="topbar"><div><div class="kicker">Paso 02 · Diálogo con la IA · Juego</div><h2 class="slide-title">Construye tu <span class="accent">prompt mágico</span></h2></div></div>
@@ -451,7 +543,7 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)</
     </div>
   </section>
 
-  <!-- 11. PASO 3 READ -->
+  <!-- 10. PASO 3 READ -->
   <section class="slide" id="s-paso3">
     <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
     <div class="topbar"><div><div class="kicker">Paso 03 · Análisis de datos real</div><h2 class="slide-title">Leer tu <span class="accent">Excel/CSV</span> desde Drive</h2></div></div>
@@ -467,56 +559,217 @@ df.<span class="fn">head</span>()</div></div>
     </div>
   </section>
 
-  <!-- 12. TRIVIA -->
-  <section class="slide" id="s-trivia">
+  <!-- 11. PRÁCTICO · PASO 01 CARGAR -->
+  <section class="slide" id="s-step1">
     <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
-    <div class="topbar"><div><div class="kicker">Trivia interactiva · ¡Puntúa!</div><h2 class="slide-title">Reto <span class="accent">relámpago</span></h2></div></div>
-    <div class="trivia-wrap fill" id="trivia" data-stop></div>
-  </section>
-
-  <!-- 13. PASO 4 CHART -->
-  <section class="slide" id="s-paso4">
-    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
-    <div class="topbar"><div><div class="kicker">Paso 04 · Creación visual · Juego</div><h2 class="slide-title">¿Cuándo usar cada <span class="accent">gráfico</span>?</h2></div></div>
-    <div class="fill" data-stop>
-      <div class="mr-meta" id="cc-meta"></div>
-      <p class="lead" id="cc-question" style="margin-bottom:2px;min-height:2.2em"></p>
-      <div class="cc-opts" id="cc-opts"></div>
-      <div class="cc-result" id="cc-result"></div>
-    </div>
-  </section>
-
-  <!-- 14. GUARDAR -->
-  <section class="slide" id="s-guardar">
-    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
-    <div class="topbar"><div><div class="kicker">El cierre del truco</div><h2 class="slide-title">Y se guarda <span class="accent">solo</span> en tu Drive</h2></div></div>
-    <p class="lead reveal" style="margin-bottom:6px">Una línea más y tu gráfico queda archivado en tu carpeta. Pulsa ▶.</p>
-    <div class="notebook reveal" data-stop>
-      <div class="nb-bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="nb-title">analisis.ipynb</span><span class="ic-box" data-icon="python"></span></div>
-      <div class="cell"><button class="run" data-run="save">▶</button><div class="code"><span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
-df.<span class="fn">groupby</span>(<span class="str">'mes'</span>)[<span class="str">'ventas'</span>].<span class="fn">sum</span>().<span class="fn">plot</span>(kind=<span class="str">'bar'</span>, color=<span class="str">'#1fe6e6'</span>)
-plt.<span class="fn">title</span>(<span class="str">'Ventas por mes 2026'</span>)
-plt.<span class="fn">savefig</span>(<span class="str">'/content/drive/MyDrive/grafico_ventas.png'</span>)</div></div>
-      <div class="output" id="out-save"></div>
-    </div>
-  </section>
-
-  <!-- 15. RULETA -->
-  <section class="slide" id="s-ruleta">
-    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
-    <div class="topbar"><div><div class="kicker">Dinámica final · ¡A practicar!</div><h2 class="slide-title">La <span class="accent">ruleta</span> de retos</h2></div></div>
-    <p class="lead reveal" style="margin-bottom:4px">Gira la ruleta. El reto que salga lo intentamos juntas con la IA.</p>
-    <div class="wheel-wrap fill" data-stop>
-      <div class="wheel-stage reveal"><div class="wheel-pointer"></div><div class="wheel" id="wheel"></div><div class="wheel-hub">✨</div></div>
-      <div class="challenge-box reveal">
-        <h4>Tu reto</h4>
-        <p id="challenge-text">Pulsa “Girar” para recibir tu misión 🪄</p>
-        <button class="btn" id="spin-btn" style="margin-top:16px">Girar la ruleta</button>
+    <div class="topbar"><div>
+      <div class="kicker"><span class="step-pill">PASO 01</span> Práctica con tu archivo de datos</div>
+      <h2 class="slide-title">Traer tu base a <span class="accent">un DataFrame</span></h2>
+    </div></div>
+    <div class="practical fill" data-stop>
+      <div class="prompt-card">
+        <div class="card-label"><span class="dot"></span>El prompt para Gemini</div>
+        <div class="prompt-text">Escribe código en Python para cargar mi archivo de datos desde Google Drive en un DataFrame llamado <code>datos</code> y mostrar los primeros <span class="fill-edit" contenteditable="true">3</span> registros.</div>
+        <div class="prompt-actions">
+          <button class="copy-prompt">⧉ Copiar prompt</button>
+          <span class="copy-hint">Toca los recuadros cian para editarlos.</span>
+        </div>
+      </div>
+      <div class="conjure" aria-hidden="true"><span class="spark">✦</span><span class="line"></span><span class="arrow">→</span></div>
+      <div class="visual-card">
+        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
+        <div class="scene">
+          <div class="p-tbl">
+            <span class="badge-3">primeros 3</span>
+            <div class="th"><span>columna A</span><span>columna B</span><span>columna C</span></div>
+            <div class="tr hot"><span>fila 1</span><span>12.4</span><span>Meta</span></div>
+            <div class="tr hot"><span>fila 2</span><span>9.8</span><span>Meta</span></div>
+            <div class="tr hot"><span>fila 3</span><span>15.1</span><span>Casanare</span></div>
+            <div class="tr" style="opacity:.4"><span>…</span><span>…</span><span>…</span></div>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="why-note">💡 <span><b>Por qué primero:</b> todo lo demás depende de tener los datos cargados en <code style="font-family:var(--mono);color:var(--cyan)">datos</code>. Verlos confirma que se leyeron bien.</span></div>
   </section>
 
-  <!-- 16. WIT-h -->
+  <!-- 12. PRÁCTICO · PASO 02 DISPERSIÓN -->
+  <section class="slide" id="s-step2">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div>
+      <div class="kicker"><span class="step-pill">PASO 02</span> Explorar visualmente</div>
+      <h2 class="slide-title">Dispersión con <span class="accent">línea de tendencia</span></h2>
+    </div></div>
+    <div class="practical fill" data-stop>
+      <div class="prompt-card">
+        <div class="card-label"><span class="dot"></span>El prompt para Gemini</div>
+        <div class="prompt-text">Con el DataFrame <code>datos</code>, crea un gráfico de dispersión usando la columna <span class="fill-edit" contenteditable="true">variable X</span> en el eje horizontal y la columna <span class="fill-edit" contenteditable="true">variable Y</span> en el eje vertical. Añade una línea de tendencia.</div>
+        <div class="prompt-actions">
+          <button class="copy-prompt">⧉ Copiar prompt</button>
+          <span class="copy-hint">Elige tus dos variables en los recuadros.</span>
+        </div>
+      </div>
+      <div class="conjure" aria-hidden="true"><span class="spark">✦</span><span class="line"></span><span class="arrow">→</span></div>
+      <div class="visual-card">
+        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
+        <div class="scene">
+          <svg class="p-scatter" viewBox="0 0 340 230">
+            <line x1="34" y1="10" x2="34" y2="200" stroke="rgba(134,242,242,.3)"/>
+            <line x1="34" y1="200" x2="330" y2="200" stroke="rgba(134,242,242,.3)"/>
+            <circle cx="70"  cy="170" r="6" fill="#1fe6e6" style="animation-delay:.1s"/>
+            <circle cx="105" cy="150" r="6" fill="#86f2f2" style="animation-delay:.18s"/>
+            <circle cx="130" cy="160" r="6" fill="#1fe6e6" style="animation-delay:.26s"/>
+            <circle cx="165" cy="120" r="6" fill="#86f2f2" style="animation-delay:.34s"/>
+            <circle cx="190" cy="128" r="6" fill="#1fe6e6" style="animation-delay:.42s"/>
+            <circle cx="225" cy="95"  r="6" fill="#86f2f2" style="animation-delay:.5s"/>
+            <circle cx="255" cy="80"  r="6" fill="#1fe6e6" style="animation-delay:.58s"/>
+            <circle cx="290" cy="55"  r="6" fill="#86f2f2" style="animation-delay:.66s"/>
+            <line class="tline" x1="55" y1="180" x2="305" y2="45" stroke="#28e0a8" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="why-note">💡 <span><b>Lectura rápida:</b> la línea muestra la dirección general de la relación entre las dos variables que elegiste.</span></div>
+  </section>
+
+  <!-- 13. PRÁCTICO · PASO 03 FILTRAR -->
+  <section class="slide" id="s-step3">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div>
+      <div class="kicker"><span class="step-pill">PASO 03</span> Filtrar</div>
+      <h2 class="slide-title">Quedarte con una sola <span class="accent">categoría</span></h2>
+    </div></div>
+    <div class="practical fill" data-stop>
+      <div class="prompt-card">
+        <div class="card-label"><span class="dot"></span>El prompt para Gemini</div>
+        <div class="prompt-text">Filtra el DataFrame <code>datos</code> para quedarte solo con las filas donde la columna <span class="fill-edit" contenteditable="true">columna</span> sea igual a <span class="fill-edit" contenteditable="true">categoría</span>. Guarda el resultado en un nuevo DataFrame.</div>
+        <div class="prompt-actions">
+          <button class="copy-prompt">⧉ Copiar prompt</button>
+          <span class="copy-hint">Tú decides la columna y el valor exacto.</span>
+        </div>
+      </div>
+      <div class="conjure" aria-hidden="true"><span class="spark">✦</span><span class="line"></span><span class="arrow">→</span></div>
+      <div class="visual-card">
+        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
+        <div class="scene">
+          <div class="p-funnel">
+            <svg viewBox="0 0 260 230"><path d="M50 30 H210 L150 120 V190 H110 V120 Z" fill="none" stroke="rgba(134,242,242,.45)" stroke-width="2"/></svg>
+            <div class="chip-fall" style="left:60px;background:#1fe6e6;animation-delay:0s">A</div>
+            <div class="chip-fall miss" style="left:110px;background:#86f2f2;animation-delay:.15s">B</div>
+            <div class="chip-fall" style="left:160px;background:#1fe6e6;animation-delay:.3s">A</div>
+            <div class="chip-fall miss" style="left:90px;background:#86f2f2;animation-delay:.45s">B</div>
+            <div class="chip-fall" style="left:140px;background:#1fe6e6;animation-delay:.6s">A</div>
+            <div class="keep-stack"><div class="k"></div><div class="k"></div><div class="k"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-note">💡 <span><b>La idea:</b> de toda la tabla, conservas únicamente las filas que cumplen tu condición. El resto se descarta.</span></div>
+  </section>
+
+  <!-- 14. PRÁCTICO · PASO 04 SEPARAR -->
+  <section class="slide" id="s-step4">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div>
+      <div class="kicker"><span class="step-pill">PASO 04</span> Separar en archivos</div>
+      <h2 class="slide-title">Un archivo por cada <span class="accent">categoría</span></h2>
+    </div></div>
+    <div class="practical fill" data-stop>
+      <div class="prompt-card">
+        <div class="card-label"><span class="dot"></span>El prompt para Gemini</div>
+        <div class="prompt-text">A partir de <code>datos</code>, crea un archivo separado por cada categoría única de la columna <span class="fill-edit" contenteditable="true">columna</span>. Cada archivo debe contener solo la información de esa categoría y guardarse en la carpeta <span class="fill-edit" contenteditable="true">ruta de destino</span>.</div>
+        <div class="prompt-actions">
+          <button class="copy-prompt">⧉ Copiar prompt</button>
+          <span class="copy-hint">Ej.: 10 departamentos → 10 archivos.</span>
+        </div>
+      </div>
+      <div class="conjure" aria-hidden="true"><span class="spark">✦</span><span class="line"></span><span class="arrow">→</span></div>
+      <div class="visual-card">
+        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
+        <div class="scene">
+          <div class="file-wrap">
+            <div class="p-doc src" style="left:8px"><div class="bars"><i></i><i></i><i></i></div><div class="lab">datos</div></div>
+            <div class="p-doc out" style="right:22px;top:14px;animation-delay:.4s"><div class="bars"><i></i><i></i></div><div class="lab">Meta</div></div>
+            <div class="p-doc out" style="right:22px;top:90px;animation-delay:.55s"><div class="bars"><i></i><i></i></div><div class="lab">Casanare</div></div>
+            <div class="p-doc out" style="right:22px;top:166px;animation-delay:.7s"><div class="bars"><i></i><i></i></div><div class="lab">Vichada</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-note">💡 <span><b>Automatización real:</b> el código recorre cada categoría sola y escribe su propio archivo, sin que tengas que repetir el proceso a mano.</span></div>
+  </section>
+
+  <!-- 15. PRÁCTICO · PASO 05 RESPALDAR -->
+  <section class="slide" id="s-step5">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div>
+      <div class="kicker"><span class="step-pill">PASO 05</span> Respaldar</div>
+      <h2 class="slide-title">Crear una <span class="accent">copia de seguridad</span></h2>
+    </div></div>
+    <div class="practical fill" data-stop>
+      <div class="prompt-card">
+        <div class="card-label"><span class="dot"></span>El prompt para Gemini</div>
+        <div class="prompt-text">Crea una carpeta llamada <code>copia de seguridad</code> dentro de <span class="fill-edit" contenteditable="true">ruta</span> y copia allí todos los archivos generados en el paso anterior.</div>
+        <div class="prompt-actions">
+          <button class="copy-prompt">⧉ Copiar prompt</button>
+          <span class="copy-hint">Los originales se conservan intactos.</span>
+        </div>
+      </div>
+      <div class="conjure" aria-hidden="true"><span class="spark">✦</span><span class="line"></span><span class="arrow">→</span></div>
+      <div class="visual-card">
+        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
+        <div class="scene">
+          <div class="file-wrap">
+            <div class="p-doc src" style="left:18px;top:55px"><div class="bars"><i></i><i></i></div><div class="lab">archivos</div></div>
+            <div class="p-doc out" style="left:80px;top:40px;animation-delay:.3s;opacity:.55"></div>
+            <div style="position:absolute;right:30px">
+              <div class="p-folder">
+                <span class="p-shield">✓</span>
+                <div class="ftag">copia de<br>seguridad</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-note">💡 <span><b>Buena práctica:</b> respaldar antes de seguir trabajando te protege si algo sale mal más adelante.</span></div>
+  </section>
+
+  <!-- 16. PRÁCTICO · PASO 06 EXCEL MULTI-HOJA -->
+  <section class="slide" id="s-step6">
+    <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
+    <div class="topbar"><div>
+      <div class="kicker"><span class="step-pill">PASO 06</span> Consolidar</div>
+      <h2 class="slide-title">Un Excel con una <span class="accent">hoja por categoría</span></h2>
+    </div></div>
+    <div class="practical fill" data-stop>
+      <div class="prompt-card">
+        <div class="card-label"><span class="dot"></span>El prompt para Gemini</div>
+        <div class="prompt-text">Genera un único archivo de Excel donde cada categoría de la columna <span class="fill-edit" contenteditable="true">columna</span> tenga su propia hoja, con su información filtrada. Guárdalo en <span class="fill-edit" contenteditable="true">ruta</span>.</div>
+        <div class="prompt-actions">
+          <button class="copy-prompt">⧉ Copiar prompt</button>
+          <span class="copy-hint">Ej.: 10 categorías → 1 Excel, 10 hojas.</span>
+        </div>
+      </div>
+      <div class="conjure" aria-hidden="true"><span class="spark">✦</span><span class="line"></span><span class="arrow">→</span></div>
+      <div class="visual-card">
+        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
+        <div class="scene">
+          <div class="p-book">
+            <div class="p-sheet" style="left:30px;top:24px;animation-delay:.2s"><span class="stab">Meta</span></div>
+            <div class="p-sheet" style="left:15px;top:12px;animation-delay:.35s"><span class="stab">Casanare</span></div>
+            <div class="p-sheet" style="left:0;top:0;animation-delay:.5s">
+              <span class="stab">Vichada</span>
+              <div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-note">💡 <span><b>Diferencia con el Paso 04:</b> antes era un archivo por categoría; aquí es <b>un solo archivo</b> con todas las categorías repartidas en hojas.</span></div>
+  </section>
+
+  <!-- 17. WIT-h -->
   <section class="slide white" id="s-with">
     <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
     <div class="split">
@@ -536,7 +789,7 @@ plt.<span class="fn">savefig</span>(<span class="str">'/content/drive/MyDrive/gr
     </div>
   </section>
 
-  <!-- 17. MENSAJE -->
+  <!-- 18. MENSAJE -->
   <section class="slide" id="s-mensaje">
     <canvas class="techbg"></canvas>
     <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
@@ -546,7 +799,7 @@ plt.<span class="fn">savefig</span>(<span class="str">'/content/drive/MyDrive/gr
     </div>
   </section>
 
-  <!-- 18. GRACIAS -->
+  <!-- 19. GRACIAS -->
   <section class="slide" id="s-gracias">
     <canvas class="techbg"></canvas>
     <div class="cover-glow"></div>
@@ -651,11 +904,7 @@ function onEnter(id){
   if(id==='s-portada')initHero();
   if(id==='s-mito')initMyth();
   if(id==='s-abrir')initColabMenu();
-  if(id==='s-orden')initOrder();
   if(id==='s-paso2')initPrompt();
-  if(id==='s-trivia')initTrivia();
-  if(id==='s-paso4')initChart();
-  if(id==='s-ruleta')initWheel();
 }
 ensureTech('s-splash');
 
@@ -739,44 +988,24 @@ function initColabMenu(){
   document.getElementById('dm-connect').onclick=e=>{e.stopPropagation();succ.style.color='var(--cyan)';succ.textContent='🔌 Busca "Colaboratory" → Instalar → vuelve a Nuevo ▸ Más';};
 }
 
-/* ===== ORDER GAME ===== */
-function initOrder(){
-  const correct=[
-    {t:'Abrir Google Drive y entrar a "+ Nuevo ▸ Más ▸ Colaboratory"',ic:'colab'},
-    {t:'Guardar una copia del cuaderno en tu Drive',ic:'drive'},
-    {t:'Escribir: from google.colab import drive',ic:'python'},
-    {t:'Ejecutar drive.mount() y autorizar tu cuenta',ic:'colab'},
-    {t:'Leer tus archivos desde /content/drive/MyDrive',ic:'excel'},
-  ];
-  let arr; const list=document.getElementById('order-list'), msg=document.getElementById('order-msg');
-  function shuffle(){arr=correct.map((x,i)=>i).sort(()=>Math.random()-.5);if(arr.join()===correct.map((_,i)=>i).join())arr.reverse();}
-  function render(){
-    list.innerHTML='';
-    arr.forEach((origIdx,pos)=>{
-      const step=correct[origIdx];
-      const row=document.createElement('div'); row.draggable=true;
-      row.style.cssText='display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:11px 14px;cursor:grab';
-      row.innerHTML='<span style="font-family:var(--mono);color:var(--cyan);font-weight:600;width:18px">'+(pos+1)+'</span><span class="ic-box" style="width:24px;height:24px;flex-shrink:0">'+ICON[step.ic]+'</span><span style="flex:1;font-size:14.5px">'+step.t+'</span>';
-      const up=document.createElement('button');up.textContent='▲';up.className='nav-btn';up.style.cssText='width:32px;height:32px;font-size:12px';
-      const dn=document.createElement('button');dn.textContent='▼';dn.className='nav-btn';dn.style.cssText='width:32px;height:32px;font-size:12px';
-      up.onclick=()=>{if(pos>0){[arr[pos-1],arr[pos]]=[arr[pos],arr[pos-1]];render();}};
-      dn.onclick=()=>{if(pos<arr.length-1){[arr[pos+1],arr[pos]]=[arr[pos],arr[pos+1]];render();}};
-      row.addEventListener('dragstart',e=>{e.dataTransfer.setData('text',pos);row.style.opacity=.4;});
-      row.addEventListener('dragend',()=>row.style.opacity=1);
-      row.addEventListener('dragover',e=>e.preventDefault());
-      row.addEventListener('drop',e=>{e.preventDefault();const from=+e.dataTransfer.getData('text');const it=arr.splice(from,1)[0];arr.splice(pos,0,it);render();});
-      row.append(up,dn); list.appendChild(row);
-    });
-  }
-  function start(){shuffle();render();msg.textContent='';}
-  document.getElementById('order-check').onclick=()=>{
-    const ok=arr.join()===correct.map((_,i)=>i).join();
-    if(ok){msg.style.color='var(--good)';msg.textContent='✅ ¡Perfecto! Ese es el flujo completo.';confetti();}
-    else{msg.style.color='var(--warn)';msg.textContent='🤔 Casi… recuerda: primero abrir Colab, al final leer los datos.';}
-  };
-  document.getElementById('order-reset').onclick=start;
-  start();
-}
+/* ===== PRACTICAL STEPS · COPY PROMPT + EDITABLE FILLS ===== */
+document.querySelectorAll('.copy-prompt').forEach(btn=>{
+  btn.addEventListener('click',async()=>{
+    const text=btn.closest('.prompt-card').querySelector('.prompt-text').innerText.replace(/\s+/g,' ').trim();
+    try{await navigator.clipboard.writeText(text);}
+    catch(_){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();}
+    const old=btn.textContent;
+    btn.textContent='✓ Copiado'; btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent=old;btn.classList.remove('ok');},1500);
+  });
+});
+document.querySelectorAll('.fill-edit').forEach(f=>{
+  f.addEventListener('focus',()=>{
+    const r=document.createRange(); r.selectNodeContents(f);
+    const s=getSelection(); s.removeAllRanges(); s.addRange(r);
+  });
+  f.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();f.blur();}});
+});
 
 /* ===== PROMPT BUILDER ===== */
 function initPrompt(){
@@ -821,113 +1050,6 @@ function runCell(kind){
     o.innerHTML='<span class="spinner"></span> Leyendo ventas_2026.xlsx desde tu Drive…';
     setTimeout(()=>{o.innerHTML='<div style="display:flex;align-items:center;gap:8px"><span class="ic-box" style="width:18px;height:18px">'+ICON.excel+'</span>✅ 120 filas cargadas</div><table><tr><th>mes</th><th>ventas</th><th>region</th></tr><tr><td>Enero</td><td>4.200</td><td>Andina</td></tr><tr><td>Febrero</td><td>5.100</td><td>Caribe</td></tr><tr><td>Marzo</td><td>6.350</td><td>Pacífico</td></tr></table>';},1300);
   }
-  if(kind==='save'){
-    const o=document.getElementById('out-save');
-    o.innerHTML='<span class="spinner"></span> Generando gráfico y guardando…';
-    setTimeout(()=>{o.innerHTML='<div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap"><svg width="180" height="110" viewBox="0 0 180 110"><line x1="20" y1="95" x2="170" y2="95" stroke="#7c79b8"/><rect x="35" y="55" width="22" height="40" fill="#1fe6e6"><animate attributeName="height" from="0" to="40" dur=".6s" fill="freeze"/><animate attributeName="y" from="95" to="55" dur=".6s" fill="freeze"/></rect><rect x="70" y="40" width="22" height="55" fill="#1fe6e6"><animate attributeName="height" from="0" to="55" dur=".7s" fill="freeze"/><animate attributeName="y" from="95" to="40" dur=".7s" fill="freeze"/></rect><rect x="105" y="25" width="22" height="70" fill="#1fe6e6"><animate attributeName="height" from="0" to="70" dur=".8s" fill="freeze"/><animate attributeName="y" from="95" to="25" dur=".8s" fill="freeze"/></rect><rect x="140" y="50" width="22" height="45" fill="#86f2f2"><animate attributeName="height" from="0" to="45" dur=".9s" fill="freeze"/><animate attributeName="y" from="95" to="50" dur=".9s" fill="freeze"/></rect></svg><div style="display:flex;align-items:center;gap:10px"><span class="ic-box" style="width:30px;height:30px">'+ICON.folder+'</span><div>✅ <span style="color:var(--good)">Guardado en</span><br>MyDrive/grafico_ventas.png<br><span style="color:var(--cyan-soft)">¡Ya está en tu Drive! 🎉</span></div></div></div>';confetti();},1500);
-  }
-}
-
-/* ===== TRIVIA ===== */
-function initTrivia(){
-  const qs=[
-    {q:'¿Necesitas instalar algo en tu computador para usar Google Colab?',o:['Sí, varios programas','No, vive en la nube'],a:1,f:'Colab corre en el navegador, en los servidores de Google.'},
-    {q:'¿Quién escribe el código cuando usas un asistente de IA?',o:['La IA, según lo que le pides','Tú, línea por línea'],a:0,f:'Tú diriges con un buen prompt; la IA escribe.'},
-    {q:'Para leer un Excel en Python, una librería muy usada es…',o:['pandas','pijamas'],a:0,f:'pandas es la caja de herramientas para datos en tablas.'},
-    {q:'Tu archivo en Drive se lee desde la ruta…',o:['/content/drive/MyDrive/...','C:/Mis documentos/...'],a:0,f:'Tras montar Drive, tus archivos viven en /content/drive/MyDrive.'},
-    {q:'¿Dónde queda el gráfico al usar savefig con tu ruta de Drive?',o:['Se pierde al cerrar','En tu Google Drive'],a:1,f:'Queda en tu carpeta de Drive, listo para compartir.'},
-  ];
-  let idx=0,score=0; const box=document.getElementById('trivia');
-  function render(){
-    if(idx>=qs.length){
-      box.innerHTML='<div style="text-align:center"><div class="t-meta" style="justify-content:center">Resultado final</div><div class="score-big">'+score+'/'+qs.length+'</div><p class="lead" style="margin:14px auto 0">'+(score===qs.length?'¡Magia perfecta! 🪄✨':score>=3?'¡Muy bien! Ya piensas como una data-maga. 💫':'¡Buen intento! Repasemos juntas. 🙌')+'</p><button class="btn" id="t-again" style="margin-top:20px">Jugar otra vez</button></div>';
-      document.getElementById('t-again').onclick=()=>{idx=0;score=0;render();}; if(score>=3)confetti(); return;
-    }
-    const q=qs[idx];
-    box.innerHTML='<div class="t-meta"><span>Pregunta '+(idx+1)+'/'+qs.length+'</span><span>⭐ '+score+'</span></div><div class="tq">'+q.q+'</div><div class="t-opts" id="t-opts"></div><div class="t-feedback" id="t-fb"></div>';
-    const opts=document.getElementById('t-opts');
-    q.o.forEach((t,i)=>{
-      const b=document.createElement('button');b.className='t-opt';b.textContent=t;
-      b.onclick=()=>{
-        opts.querySelectorAll('.t-opt').forEach(x=>x.disabled=true);
-        if(i===q.a){b.classList.add('correct');score++;confetti();}else{b.classList.add('wrong');opts.children[q.a].classList.add('correct');}
-        const fb=document.getElementById('t-fb'); fb.innerHTML='💡 '+q.f+'<br>';
-        const nx=document.createElement('button');nx.className='btn';nx.style.marginTop='12px';
-        nx.textContent=idx===qs.length-1?'Ver resultado':'Siguiente →';nx.onclick=()=>{idx++;render();};fb.appendChild(nx);
-      };
-      opts.appendChild(b);
-    });
-  }
-  render();
-}
-
-/* ===== CHART CHOOSER ===== */
-function initChart(){
-  const svgs={
-    bar:'<svg viewBox="0 0 60 50"><rect x="6" y="28" width="9" height="18" fill="#1fe6e6"/><rect x="20" y="18" width="9" height="28" fill="#1fe6e6"/><rect x="34" y="10" width="9" height="36" fill="#1fe6e6"/><rect x="48" y="24" width="9" height="22" fill="#86f2f2"/></svg>',
-    line:'<svg viewBox="0 0 60 50"><polyline points="6,38 20,22 34,30 48,10" fill="none" stroke="#1fe6e6" stroke-width="3"/><circle cx="48" cy="10" r="3" fill="#86f2f2"/></svg>',
-    pie:'<svg viewBox="0 0 60 50"><circle cx="30" cy="25" r="20" fill="#1fe6e6"/><path d="M30 25 L30 5 A20 20 0 0 1 47 35 Z" fill="#86f2f2"/></svg>'
-  };
-  const names={bar:'Barras',line:'Líneas',pie:'Pastel'};
-  const rounds=[
-    {q:'Quieres comparar las ventas de cada mes del año.',a:'bar',why:'<strong>Barras</strong> → para <strong>comparar categorías o grupos</strong> (los meses) de un vistazo.'},
-    {q:'Quieres ver cómo cambió el caudal del río a lo largo de 12 meses.',a:'line',why:'<strong>Líneas</strong> → para mostrar una <strong>tendencia o evolución en el tiempo</strong>.'},
-    {q:'Quieres mostrar qué porcentaje del presupuesto va a cada área.',a:'pie',why:'<strong>Pastel</strong> → para ver <strong>proporciones de un todo</strong> (pocas categorías).'}
-  ];
-  let r=0, correctCount=0;
-  const meta=document.getElementById('cc-meta'), ques=document.getElementById('cc-question'),
-        wrap=document.getElementById('cc-opts'), res=document.getElementById('cc-result');
-  function render(){
-    if(r>=rounds.length){
-      meta.textContent='';
-      ques.innerHTML='<span class="accent" style="font-family:var(--display);font-size:1.3em">Resumen mágico ✨</span>';
-      wrap.innerHTML='<div class="cc-card locked">'+svgs.bar+'<div class="cc-name">Barras</div><p style="font-size:12.5px;color:#cfc9ff;margin-top:6px">Comparar grupos</p></div><div class="cc-card locked">'+svgs.line+'<div class="cc-name">Líneas</div><p style="font-size:12.5px;color:#cfc9ff;margin-top:6px">Tendencia en el tiempo</p></div><div class="cc-card locked">'+svgs.pie+'<div class="cc-name">Pastel</div><p style="font-size:12.5px;color:#cfc9ff;margin-top:6px">Proporción de un todo</p></div>';
-      res.innerHTML='<p class="lead">Acertaste <span class="accent">'+correctCount+'/'+rounds.length+'</span>. Ya sabes pedirle a la IA el gráfico correcto según tu pregunta. 🪄</p>';
-      if(correctCount===rounds.length)confetti(); return;
-    }
-    const rd=rounds[r];
-    meta.textContent='Ronda '+(r+1)+'/'+rounds.length+'   ·   Acertadas: '+correctCount;
-    ques.innerHTML='🎯 '+rd.q+' <strong>¿Qué gráfico pides?</strong>';
-    wrap.innerHTML=''; res.innerHTML='';
-    ['bar','line','pie'].forEach(k=>{
-      const c=document.createElement('button');c.className='cc-card';
-      c.innerHTML=svgs[k]+'<div class="cc-name">'+names[k]+'</div>';
-      c.onclick=()=>{
-        wrap.querySelectorAll('.cc-card').forEach(x=>{x.classList.add('locked');x.disabled=true;});
-        if(k===rd.a){c.classList.add('correct');correctCount++;confetti();res.innerHTML='<p class="lead" style="color:var(--good)">✅ '+rd.why+'</p>';}
-        else{c.classList.add('wrong');[...wrap.children].find(x=>x.querySelector('.cc-name').textContent===names[rd.a]).classList.add('correct');res.innerHTML='<p class="lead">Casi. '+rd.why+'</p>';}
-        const nx=document.createElement('button');nx.className='btn';nx.style.marginTop='12px';
-        nx.textContent=r===rounds.length-1?'Ver resumen':'Siguiente ronda →';nx.onclick=()=>{r++;render();};
-        res.appendChild(nx);
-      };
-      wrap.appendChild(c);
-    });
-  }
-  render();
-}
-
-/* ===== RULETA ===== */
-function initWheel(){
-  const challenges=[
-    'Pide a la IA un gráfico de torta de tus gastos del mes',
-    'Pide que te explique tu código como si tuvieras 10 años',
-    'Carga un CSV y pide el promedio de una columna',
-    'Pide un gráfico de líneas de una tendencia en el tiempo',
-    'Pide que limpie las filas vacías de tu tabla',
-    'Pide un resumen estadístico con df.describe()'
-  ];
-  const wheel=document.getElementById('wheel'), n=challenges.length, seg=360/n;
-  const colors=['#1fe6e6','#16097f','#86f2f2','#1c0bb0','#28e0a8','#0d0556'];
-  let stops=[];for(let i=0;i<n;i++)stops.push(colors[i%colors.length]+' '+(i*seg)+'deg '+((i+1)*seg)+'deg');
-  wheel.style.background='conic-gradient('+stops.join(',')+')';
-  let rot=0,spinning=false;
-  document.getElementById('spin-btn').onclick=()=>{
-    if(spinning)return;spinning=true;
-    const pick=Math.floor(Math.random()*n);
-    rot+=360*4+(360-(pick*seg+seg/2)); wheel.style.transform='rotate('+rot+'deg)';
-    document.getElementById('challenge-text').textContent='Girando… 🪄';
-    setTimeout(()=>{document.getElementById('challenge-text').textContent=challenges[pick];spinning=false;confetti();},4600);
-  };
 }
 
 document.getElementById('restart').onclick=()=>{initSet.clear();show(0);};
