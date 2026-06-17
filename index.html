@@ -596,12 +596,14 @@ a{color:var(--cyan)}
 .vs-source .vs-meta{font-family:var(--mono);font-size:9px;color:var(--cyan-soft)}
 .vs-arrow{font-family:var(--display);font-weight:700;font-size:28px;color:var(--cyan);text-shadow:0 0 10px var(--cyan);animation:vfPulse 1.6s ease-in-out infinite;display:flex;flex-direction:column;align-items:center;gap:4px}
 .vs-arrow small{font-family:var(--mono);font-size:9px;color:var(--cyan-soft);letter-spacing:1px;text-shadow:none}
-.vs-outs{display:flex;flex-direction:column;gap:7px;min-width:0}
+.vs-outs{display:flex;flex-direction:column;gap:7px;min-width:0;background:rgba(31,230,230,.04);border:1px dashed rgba(31,230,230,.3);border-radius:12px;padding:8px 9px}
+.vs-folder-tag{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:.5px;padding:2px 4px 4px;border-bottom:1px solid rgba(31,230,230,.18);margin-bottom:2px}
 .vs-out{display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,rgba(40,224,168,.12),rgba(40,224,168,.03));border:1px solid rgba(40,224,168,.4);border-radius:10px;padding:7px 10px;font-family:var(--mono);font-size:10.5px;color:#fff;opacity:0;transform:translateX(-12px)}
 .slide.active .vs-out{animation:vsSlide .55s ease forwards}
 .slide.active .vs-out:nth-child(2){animation-delay:.18s}
 .slide.active .vs-out:nth-child(3){animation-delay:.36s}
 .slide.active .vs-out:nth-child(4){animation-delay:.54s}
+.slide.active .vs-out:nth-child(5){animation-delay:.72s}
 @keyframes vsSlide{to{opacity:1;transform:none}}
 .vs-out .vs-out-ic{font-size:18px;line-height:1;flex-shrink:0}
 .vs-out .vs-out-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -629,7 +631,6 @@ a{color:var(--cyan)}
 .vbk-side .vbk-title{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;color:var(--cyan-soft);text-align:center;text-transform:uppercase}
 .vbk-files{display:flex;flex-direction:column;gap:5px}
 .vbk-file{background:rgba(255,255,255,.06);border:1px solid rgba(134,242,242,.3);border-radius:8px;padding:5px 8px;font-family:var(--mono);font-size:9.5px;color:#fff;display:flex;align-items:center;gap:7px}
-.vbk-file::before{content:"📄";font-size:13px}
 .vbk-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--cyan)}
 .vbk-arrow .vbk-ar{font-size:24px;font-family:var(--display);font-weight:700;color:var(--cyan);text-shadow:0 0 10px var(--cyan);animation:vfPulse 1.6s ease-in-out infinite}
 .vbk-arrow .vbk-cp{font-family:var(--mono);font-size:9px;color:var(--good);letter-spacing:1px;background:rgba(40,224,168,.14);border:1px solid rgba(40,224,168,.4);border-radius:20px;padding:2px 8px;font-weight:700}
@@ -642,7 +643,8 @@ a{color:var(--cyan)}
 @keyframes vbkShield{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
 .vbk-clones{display:flex;flex-direction:column;gap:4px;margin-top:4px}
 .vbk-clone{background:rgba(40,224,168,.14);border:1px solid rgba(40,224,168,.5);border-radius:6px;padding:3px 7px;font-family:var(--mono);font-size:8.5px;color:#7df4cc;opacity:0;display:flex;align-items:center;gap:5px}
-.vbk-clone::before{content:"📄";font-size:10px;filter:hue-rotate(120deg)}
+.vbk-clone::before{content:"📄";font-size:10px}
+.vbk-clone.fld::before{content:"📁"}
 .slide.active .vbk-clone{animation:vsSlide .45s ease forwards}
 .slide.active .vbk-clone:nth-child(1){animation-delay:.4s}
 .slide.active .vbk-clone:nth-child(2){animation-delay:.55s}
@@ -652,32 +654,28 @@ a{color:var(--cyan)}
 .visual-card .scene{min-height:200px;padding:0;position:relative}
 .visual-card .scene > div[class^="viz-"]{width:100%;height:100%}
 
-/* ===== SLIDE 17 · WIT-h REDESIGN ===== */
-#s-with{padding:0}
+/* ===== SLIDE 17 · WIT-h REDESIGN v2 ===== */
+#s-with{padding:clamp(28px,4.6vw,60px);background:linear-gradient(180deg,#fff 0%,#eef3f9 100%);justify-content:center;align-items:center}
 #s-with .logo-corner{top:18px;right:24px;z-index:5}
-.with-grid{display:grid;grid-template-columns:.85fr 1.2fr;flex:1;width:100%;min-height:0}
-@media(max-width:880px){.with-grid{grid-template-columns:1fr}}
-.with-hero{background:radial-gradient(circle at 70% 20%,var(--navy),var(--navy-3));color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(28px,5vw,68px);gap:clamp(16px,2.6vh,28px);position:relative;overflow:hidden}
-.with-hero::after{content:"";position:absolute;width:140%;height:140%;border-radius:50%;background:radial-gradient(circle,rgba(31,230,230,.18),transparent 55%);top:-20%;left:-20%;pointer-events:none}
-.wit-h-mark{display:flex;flex-direction:column;align-items:center;gap:6px;line-height:1;font-family:var(--display);position:relative;z-index:1}
-.wit-h-mark .wit-h-top{font-weight:700;font-size:clamp(46px,7vw,84px);letter-spacing:-2px;color:#fff;display:flex;align-items:baseline;gap:.05em}
-.wit-h-mark .wit-h-top .ast{color:var(--cyan);font-size:.85em;text-shadow:0 0 18px var(--cyan)}
-.wit-h-mark .wit-h-sub{font-family:var(--body);font-weight:500;font-size:clamp(13px,1.6vw,18px);color:var(--cyan-soft);letter-spacing:2px;text-transform:uppercase}
-.with-quote{font-family:var(--serif);font-style:italic;font-size:clamp(16px,1.9vw,22px);color:#cfc9ff;max-width:24ch;line-height:1.35;position:relative;z-index:1}
-.with-quote::before{content:"\201C";color:var(--cyan);font-size:1.6em;margin-right:.1em;line-height:0;vertical-align:-.2em}
-.with-quote::after{content:"\201D";color:var(--cyan);font-size:1.6em;margin-left:.1em;line-height:0;vertical-align:-.2em}
-.with-actions{padding:clamp(28px,5vw,60px) clamp(26px,4.6vw,60px);display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,2vh,22px);color:var(--ink);background:linear-gradient(180deg,#fff,#f3f7fb)}
-.with-actions .kicker{color:var(--navy)!important}
-.with-actions .slide-title{color:var(--ink);font-size:clamp(28px,3.6vw,46px);line-height:1.05;letter-spacing:-1px}
-.with-actions .slide-title .accent{color:#0eb8b8}
-.with-cards{display:flex;flex-direction:column;gap:clamp(10px,1.6vh,16px);margin-top:6px}
-.wc{background:#fff;border-left:5px solid var(--cyan);border-radius:14px;padding:clamp(14px,1.8vw,20px) clamp(16px,2vw,22px);display:flex;gap:16px;align-items:flex-start;box-shadow:0 8px 26px -12px rgba(28,11,176,.18);transition:.25s}
-.wc:hover{transform:translateX(4px);box-shadow:0 14px 30px -10px rgba(28,11,176,.25)}
-.wc-ic{font-size:clamp(26px,3vw,34px);line-height:1;flex-shrink:0;filter:drop-shadow(0 0 8px rgba(31,230,230,.4))}
-.wc-body{flex:1;min-width:0}
-.wc-body h3{font-family:var(--display);font-weight:700;font-size:clamp(16px,1.8vw,19px);color:var(--ink);margin-bottom:4px;letter-spacing:-.3px}
-.wc-body p{font-size:clamp(13px,1.4vw,15px);color:#3a3380;line-height:1.45}
-.wc-body p .pill{font-family:var(--mono);background:linear-gradient(90deg,rgba(31,230,230,.25),rgba(31,230,230,.12));color:var(--navy);padding:2px 10px;border-radius:6px;font-weight:700;letter-spacing:.3px;font-size:.92em;display:inline-block;margin-top:2px}
+.with-stack{flex:1;display:flex;flex-direction:column;gap:clamp(22px,3.2vh,42px);justify-content:center;align-items:center;text-align:center;width:100%;max-width:1180px}
+.with-hero{display:flex;flex-direction:column;align-items:center;gap:clamp(14px,2vh,22px);max-width:780px}
+.wit-h-badge{display:inline-flex;flex-direction:column;align-items:center;line-height:1;background:linear-gradient(140deg,var(--navy),var(--navy-3));color:#fff;padding:clamp(16px,2.4vh,26px) clamp(34px,4.6vw,60px);border-radius:22px;box-shadow:0 22px 50px -18px rgba(28,11,176,.55);position:relative}
+.wit-h-badge::after{content:"";position:absolute;inset:-3px;background:linear-gradient(140deg,var(--cyan),transparent 70%);border-radius:24px;z-index:-1;opacity:.45;filter:blur(10px)}
+.wit-h-big{font-family:var(--display);font-weight:700;font-size:clamp(42px,5.6vw,72px);letter-spacing:-2px}
+.wit-h-big .ast{color:var(--cyan);font-size:.85em;text-shadow:0 0 22px var(--cyan);margin-left:.06em}
+.wit-h-tag{font-family:var(--body);font-weight:500;font-size:clamp(11px,1.2vw,14px);color:var(--cyan-soft);letter-spacing:3px;text-transform:uppercase;margin-top:8px}
+.with-title{font-family:var(--display);font-weight:700;font-size:clamp(30px,4vw,50px);color:var(--ink);letter-spacing:-1.5px;line-height:1.05}
+.with-title .accent{color:#0eb8b8}
+.with-lead{font-family:var(--body);font-size:clamp(14px,1.6vw,18px);color:#3a3380;line-height:1.5;max-width:54ch}
+.with-row{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.8vw,22px);width:100%}
+@media(max-width:820px){.with-row{grid-template-columns:1fr;max-width:540px}}
+.wc{background:#fff;border:1px solid rgba(28,11,176,.08);border-top:4px solid var(--cyan);border-radius:16px;padding:clamp(18px,2.4vw,26px) clamp(18px,2vw,24px);display:flex;flex-direction:column;align-items:flex-start;gap:10px;text-align:left;box-shadow:0 12px 30px -16px rgba(28,11,176,.22);transition:.25s;position:relative;overflow:hidden}
+.wc::before{content:"";position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle,rgba(31,230,230,.2),transparent 70%);pointer-events:none}
+.wc:hover{transform:translateY(-6px);box-shadow:0 20px 40px -16px rgba(28,11,176,.32);border-top-color:#0eb8b8}
+.wc-ic{font-size:clamp(28px,3.2vw,38px);line-height:1;filter:drop-shadow(0 4px 8px rgba(31,230,230,.4))}
+.wc h3{font-family:var(--display);font-weight:700;font-size:clamp(16px,1.7vw,20px);color:var(--ink);letter-spacing:-.3px;line-height:1.15}
+.wc p{font-size:clamp(13px,1.35vw,15px);color:#3a3380;line-height:1.45;margin:0}
+.wc p .pill{font-family:var(--mono);background:linear-gradient(90deg,rgba(31,230,230,.3),rgba(31,230,230,.12));color:var(--navy);padding:4px 12px;border-radius:8px;font-weight:700;letter-spacing:.3px;font-size:.95em;display:inline-block;margin-top:4px}
 
 /* ===== SLIDE 18 · GRACIAS REDESIGN ===== */
 #s-gracias{justify-content:center;gap:clamp(16px,2.6vh,30px)}
@@ -979,7 +977,7 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)</
       <div class="lf-col reveal">
         <div class="lf-tag"><span class="lf-tag-n">1</span>Tú escribes</div>
         <div class="lf-card lf-prompt-card">
-          <p>Carga el archivo <code>ventas_empresa.xlsx</code> que está en mi Google Drive en un DataFrame llamado <code>datos</code> y muéstrame las primeras <code>5</code> filas.</p>
+          <p>Carga el archivo <code>ventas_empresas.xlsx</code> que tengo en mi Drive, en la carpeta <span class="fill-edit" contenteditable="true">/content/drive/MyDrive/taller_wit/</span>. Guárdalo en un DataFrame llamado <code>datos</code> y muéstrame las primeras <code>3</code> filas.</p>
           <div class="lf-actions"><button class="copy-prompt">⧉ Copiar prompt</button></div>
         </div>
       </div>
@@ -989,17 +987,20 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)</
         <div class="lf-card lf-code-card">
 <pre><span class="cm"># Importar librerías</span>
 <span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">import</span> os
 <span class="kw">from</span> google.colab <span class="kw">import</span> drive
 
 <span class="cm"># Montar Drive (si no está)</span>
 drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)
 
-<span class="cm"># Cargar la base</span>
-<span class="v">ruta</span> = <span class="str">'/content/drive/MyDrive/ventas_empresa.xlsx'</span>
-<span class="v">datos</span> = pd.<span class="fn">read_excel</span>(<span class="v">ruta</span>)
+<span class="cm"># Carpeta de trabajo</span>
+os.<span class="fn">chdir</span>(<span class="str">'/content/drive/MyDrive/taller_wit'</span>)
 
-<span class="cm"># Ver las primeras 5 filas</span>
-<span class="v">datos</span>.<span class="fn">head</span>(<span class="v">5</span>)</pre>
+<span class="cm"># Cargar la base</span>
+<span class="v">datos</span> = pd.<span class="fn">read_excel</span>(<span class="str">'ventas_empresas.xlsx'</span>)
+
+<span class="cm"># Ver las primeras 3 filas</span>
+<span class="v">datos</span>.<span class="fn">head</span>(<span class="v">3</span>)</pre>
         </div>
       </div>
       <!-- 3. RESULTADO -->
@@ -1008,17 +1009,15 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)
         <div class="lf-card lf-result-card">
           <div class="lf-tbl-wrap">
             <table class="lf-tbl">
-              <thead><tr><th>#</th><th>mes</th><th>region</th><th>ventas</th><th>clientes</th></tr></thead>
+              <thead><tr><th>#</th><th>mes</th><th>Departamento</th><th>ventas</th><th>clientes</th></tr></thead>
               <tbody>
-                <tr><td>0</td><td>Enero</td><td>Andina</td><td>4.200</td><td>128</td></tr>
-                <tr><td>1</td><td>Febrero</td><td>Caribe</td><td>5.100</td><td>146</td></tr>
-                <tr><td>2</td><td>Marzo</td><td>Pacífico</td><td>6.350</td><td>173</td></tr>
-                <tr><td>3</td><td>Abril</td><td>Andina</td><td>7.420</td><td>201</td></tr>
-                <tr><td>4</td><td>Mayo</td><td>Orinoquía</td><td>5.890</td><td>164</td></tr>
+                <tr><td>0</td><td>Enero</td><td>Meta</td><td>4.200</td><td>128</td></tr>
+                <tr><td>1</td><td>Febrero</td><td>Antioquia</td><td>5.100</td><td>146</td></tr>
+                <tr><td>2</td><td>Marzo</td><td>Valle</td><td>6.350</td><td>173</td></tr>
               </tbody>
             </table>
           </div>
-          <div class="lf-meta">✅ <b>5 filas</b> mostradas · <b>120 totales</b> en <code style="font-family:var(--mono);color:var(--cyan)">datos</code></div>
+          <div class="lf-meta">✅ <b>3 filas</b> mostradas · <b>120 totales</b> en <code style="font-family:var(--mono);color:var(--cyan)">datos</code></div>
         </div>
       </div>
     </div>
@@ -1035,7 +1034,7 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)
     <div class="practical fill" data-stop>
       <div class="prompt-card">
         <div class="card-label"><span class="dot"></span>El prompt</div>
-        <div class="prompt-text">Con <code>datos</code>, dispersión: eje X = <span class="fill-edit" contenteditable="true">mes</span>, eje Y = <span class="fill-edit" contenteditable="true">ventas</span>. Añade línea de tendencia.</div>
+        <div class="prompt-text">Con <code>datos</code>, hazme un gráfico de dispersión usando <span class="fill-edit" contenteditable="true">mes</span> en el eje X y <span class="fill-edit" contenteditable="true">ventas</span> en el eje Y. Añádele una línea de tendencia.</div>
         <div class="prompt-actions">
           <button class="copy-prompt">⧉ Copiar</button>
           <span class="copy-hint">Edita los recuadros con tus columnas.</span>
@@ -1092,7 +1091,7 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)
     <div class="practical fill" data-stop>
       <div class="prompt-card">
         <div class="card-label"><span class="dot"></span>El prompt</div>
-        <div class="prompt-text">Filtra <code>datos</code> donde <span class="fill-edit" contenteditable="true">region</span> = <span class="fill-edit" contenteditable="true">Andina</span>. Guarda en <code>datos_filtrado</code>.</div>
+        <div class="prompt-text">De <code>datos</code>, déjame solo las filas donde <span class="fill-edit" contenteditable="true">Departamento</span> sea <span class="fill-edit" contenteditable="true">Meta</span> y guarda el resultado como <code>ventas_Meta.xlsx</code> en la misma carpeta de trabajo.</div>
         <div class="prompt-actions">
           <button class="copy-prompt">⧉ Copiar</button>
           <span class="copy-hint">Cambia la columna y el valor exacto.</span>
@@ -1103,32 +1102,32 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)
         <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
         <div class="scene">
           <div class="viz-filter">
-            <div class="viz-filter-chip">region == "Andina"</div>
+            <div class="viz-filter-chip">Departamento == "Meta"</div>
             <div class="vf-tables">
               <div class="vf-table">
-                <div class="vf-thead"><span>mes</span><span>region</span><span>ventas</span></div>
+                <div class="vf-thead"><span>mes</span><span>Departamento</span><span>ventas</span></div>
                 <div class="vf-rows">
-                  <div class="vf-r keep"><span>Ene</span><span>Andina</span><span>4 200</span></div>
-                  <div class="vf-r dim"><span>Feb</span><span>Caribe</span><span>5 100</span></div>
-                  <div class="vf-r keep"><span>Mar</span><span>Andina</span><span>3 850</span></div>
-                  <div class="vf-r dim"><span>Abr</span><span>Pacífico</span><span>4 700</span></div>
-                  <div class="vf-r keep"><span>May</span><span>Andina</span><span>5 320</span></div>
-                  <div class="vf-r dim"><span>Jun</span><span>Caribe</span><span>4 980</span></div>
+                  <div class="vf-r keep"><span>Ene</span><span>Meta</span><span>4 200</span></div>
+                  <div class="vf-r dim"><span>Feb</span><span>Antioquia</span><span>5 100</span></div>
+                  <div class="vf-r keep"><span>Mar</span><span>Meta</span><span>3 850</span></div>
+                  <div class="vf-r dim"><span>Abr</span><span>Valle</span><span>4 700</span></div>
+                  <div class="vf-r keep"><span>May</span><span>Meta</span><span>5 320</span></div>
+                  <div class="vf-r dim"><span>Jun</span><span>Cundinamarca</span><span>4 980</span></div>
                 </div>
-                <div class="vf-meta"><b>120</b> filas · <b>5</b> regiones</div>
+                <div class="vf-meta"><b>120</b> filas · <b>5</b> departamentos</div>
               </div>
               <div class="vf-arrow"><span>→</span></div>
               <div class="vf-table">
-                <div class="vf-thead"><span>mes</span><span>region</span><span>ventas</span></div>
+                <div class="vf-thead"><span>mes</span><span>Departamento</span><span>ventas</span></div>
                 <div class="vf-rows">
-                  <div class="vf-r keep"><span>Ene</span><span>Andina</span><span>4 200</span></div>
-                  <div class="vf-r keep"><span>Mar</span><span>Andina</span><span>3 850</span></div>
-                  <div class="vf-r keep"><span>May</span><span>Andina</span><span>5 320</span></div>
-                  <div class="vf-r keep"><span>Jul</span><span>Andina</span><span>5 740</span></div>
-                  <div class="vf-r keep"><span>Sep</span><span>Andina</span><span>6 010</span></div>
-                  <div class="vf-r keep"><span>Nov</span><span>Andina</span><span>6 280</span></div>
+                  <div class="vf-r keep"><span>Ene</span><span>Meta</span><span>4 200</span></div>
+                  <div class="vf-r keep"><span>Mar</span><span>Meta</span><span>3 850</span></div>
+                  <div class="vf-r keep"><span>May</span><span>Meta</span><span>5 320</span></div>
+                  <div class="vf-r keep"><span>Jul</span><span>Meta</span><span>5 740</span></div>
+                  <div class="vf-r keep"><span>Sep</span><span>Meta</span><span>6 010</span></div>
+                  <div class="vf-r keep"><span>Nov</span><span>Meta</span><span>6 280</span></div>
                 </div>
-                <div class="vf-meta"><b>24</b> filas · solo <b>Andina</b></div>
+                <div class="vf-meta"><b>24</b> filas · solo <b>Meta</b></div>
               </div>
             </div>
           </div>
@@ -1148,10 +1147,10 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)
     <div class="practical fill" data-stop>
       <div class="prompt-card">
         <div class="card-label"><span class="dot"></span>El prompt</div>
-        <div class="prompt-text">Desde <code>datos</code>, crea un archivo <code>.xlsx</code> por cada valor de <span class="fill-edit" contenteditable="true">region</span>. Guárdalos en <span class="fill-edit" contenteditable="true">/MiDrive/salidas/</span>.</div>
+        <div class="prompt-text">Con <code>datos</code>, créame una carpeta nueva llamada <code>ventas_departamentos</code> en la misma carpeta de trabajo y guarda dentro un archivo de Excel por cada <span class="fill-edit" contenteditable="true">Departamento</span> distinto, con el nombre <code>ventas_&lt;Departamento&gt;.xlsx</code>.</div>
         <div class="prompt-actions">
           <button class="copy-prompt">⧉ Copiar</button>
-          <span class="copy-hint">Ej.: 5 regiones → 5 archivos.</span>
+          <span class="copy-hint">Ej.: 5 departamentos → 5 archivos.</span>
         </div>
       </div>
       <div class="conjure" aria-hidden="true"><span class="spark">✦</span><span class="line"></span><span class="arrow">→</span></div>
@@ -1161,15 +1160,16 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)
           <div class="viz-split">
             <div class="vs-source">
               <div class="vs-ic">📊</div>
-              <div class="vs-name">datos.xlsx</div>
+              <div class="vs-name">ventas_empresas.xlsx</div>
               <div class="vs-meta">120 filas</div>
             </div>
             <div class="vs-arrow">→<small>split</small></div>
             <div class="vs-outs">
-              <div class="vs-out"><span class="vs-out-ic">📄</span><span class="vs-out-name">ventas_Andina.xlsx</span><span class="vs-out-rows">24</span></div>
-              <div class="vs-out"><span class="vs-out-ic">📄</span><span class="vs-out-name">ventas_Caribe.xlsx</span><span class="vs-out-rows">24</span></div>
-              <div class="vs-out"><span class="vs-out-ic">📄</span><span class="vs-out-name">ventas_Pacifico.xlsx</span><span class="vs-out-rows">24</span></div>
-              <div class="vs-out"><span class="vs-out-ic">📄</span><span class="vs-out-name">ventas_Orinoquia.xlsx</span><span class="vs-out-rows">24</span></div>
+              <div class="vs-folder-tag">📁 ventas_departamentos/</div>
+              <div class="vs-out"><span class="vs-out-ic">📄</span><span class="vs-out-name">ventas_Meta.xlsx</span><span class="vs-out-rows">24</span></div>
+              <div class="vs-out"><span class="vs-out-ic">📄</span><span class="vs-out-name">ventas_Antioquia.xlsx</span><span class="vs-out-rows">24</span></div>
+              <div class="vs-out"><span class="vs-out-ic">📄</span><span class="vs-out-name">ventas_Valle.xlsx</span><span class="vs-out-rows">24</span></div>
+              <div class="vs-out"><span class="vs-out-ic">📄</span><span class="vs-out-name">ventas_Cundinamarca.xlsx</span><span class="vs-out-rows">24</span></div>
             </div>
           </div>
         </div>
@@ -1188,10 +1188,10 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)
     <div class="practical fill" data-stop>
       <div class="prompt-card">
         <div class="card-label"><span class="dot"></span>El prompt</div>
-        <div class="prompt-text">Genera <code>ventas.xlsx</code> con una hoja por cada valor de <span class="fill-edit" contenteditable="true">region</span>. Guárdalo en <span class="fill-edit" contenteditable="true">/MiDrive/salidas/</span>.</div>
+        <div class="prompt-text">Con <code>datos</code>, créame una carpeta llamada <code>ventas_todos_departamentos</code> en la misma carpeta de trabajo y guarda dentro un solo Excel <code>ventas.xlsx</code> con una hoja por cada <span class="fill-edit" contenteditable="true">Departamento</span>.</div>
         <div class="prompt-actions">
           <button class="copy-prompt">⧉ Copiar</button>
-          <span class="copy-hint">5 categorías → 1 Excel, 5 hojas.</span>
+          <span class="copy-hint">5 departamentos → 1 Excel, 5 hojas.</span>
         </div>
       </div>
       <div class="conjure" aria-hidden="true"><span class="spark">✦</span><span class="line"></span><span class="arrow">→</span></div>
@@ -1199,21 +1199,21 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)
         <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
         <div class="scene">
           <div class="viz-book">
-            <span class="vb-badge">1 archivo · 5 hojas</span>
+            <span class="vb-badge">📁 ventas_todos_departamentos/</span>
             <div class="vb-titlebar">ventas.xlsx</div>
             <div class="vb-sheet">
-              <div class="vb-grid-row head"><span></span><span>mes</span><span>region</span><span>ventas</span></div>
-              <div class="vb-grid-row idx"><span>1</span><span>Ene</span><span>Andina</span><span>4 200</span></div>
-              <div class="vb-grid-row idx"><span>2</span><span>Feb</span><span>Andina</span><span>4 880</span></div>
-              <div class="vb-grid-row idx"><span>3</span><span>Mar</span><span>Andina</span><span>3 850</span></div>
-              <div class="vb-grid-row idx"><span>4</span><span>Abr</span><span>Andina</span><span>5 200</span></div>
+              <div class="vb-grid-row head"><span></span><span>mes</span><span>Departamento</span><span>ventas</span></div>
+              <div class="vb-grid-row idx"><span>1</span><span>Ene</span><span>Meta</span><span>4 200</span></div>
+              <div class="vb-grid-row idx"><span>2</span><span>Feb</span><span>Meta</span><span>4 880</span></div>
+              <div class="vb-grid-row idx"><span>3</span><span>Mar</span><span>Meta</span><span>3 850</span></div>
+              <div class="vb-grid-row idx"><span>4</span><span>Abr</span><span>Meta</span><span>5 200</span></div>
             </div>
             <div class="vb-tabs">
-              <div class="vb-tab active">Andina</div>
-              <div class="vb-tab">Caribe</div>
-              <div class="vb-tab">Pacífico</div>
-              <div class="vb-tab">Orinoquía</div>
-              <div class="vb-tab">Amazonía</div>
+              <div class="vb-tab active">Meta</div>
+              <div class="vb-tab">Antioquia</div>
+              <div class="vb-tab">Valle</div>
+              <div class="vb-tab">Cundinamarca</div>
+              <div class="vb-tab">Santander</div>
             </div>
           </div>
         </div>
@@ -1232,7 +1232,7 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)
     <div class="practical fill" data-stop>
       <div class="prompt-card">
         <div class="card-label"><span class="dot"></span>El prompt</div>
-        <div class="prompt-text">Crea la carpeta <code>copia_seguridad</code> en <span class="fill-edit" contenteditable="true">/MiDrive/salidas/</span> y copia allí todos los archivos generados en pasos anteriores.</div>
+        <div class="prompt-text">Créame una carpeta llamada <code>copia_seguridad</code> en la misma carpeta de trabajo y copia ahí todos los archivos y carpetas que generamos en los pasos anteriores.</div>
         <div class="prompt-actions">
           <button class="copy-prompt">⧉ Copiar</button>
           <span class="copy-hint">Los originales se conservan intactos.</span>
@@ -1244,20 +1244,20 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)
         <div class="scene">
           <div class="viz-backup">
             <div class="vbk-side">
-              <div class="vbk-title">originales</div>
+              <div class="vbk-title">en tu carpeta de trabajo</div>
               <div class="vbk-files">
-                <div class="vbk-file">ventas_Andina.xlsx</div>
-                <div class="vbk-file">ventas_Caribe.xlsx</div>
-                <div class="vbk-file">ventas.xlsx</div>
+                <div class="vbk-file">📁 ventas_departamentos/</div>
+                <div class="vbk-file">📁 ventas_todos_departamentos/</div>
+                <div class="vbk-file">ventas_Meta.xlsx</div>
               </div>
             </div>
             <div class="vbk-arrow"><div class="vbk-ar">→</div><div class="vbk-cp">COPY</div></div>
             <div class="vbk-folder-wrap">
               <div class="vbk-folder"><div class="vbk-folder-name">copia_<br>seguridad</div><span class="vbk-shield">✓</span></div>
               <div class="vbk-clones">
-                <div class="vbk-clone">ventas_Andina.xlsx</div>
-                <div class="vbk-clone">ventas_Caribe.xlsx</div>
-                <div class="vbk-clone">ventas.xlsx</div>
+                <div class="vbk-clone fld">ventas_departamentos/</div>
+                <div class="vbk-clone fld">ventas_todos_departamentos/</div>
+                <div class="vbk-clone">ventas_Meta.xlsx</div>
               </div>
             </div>
           </div>
@@ -1270,39 +1270,30 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)
   <!-- 17. WIT-h -->
   <section class="slide white" id="s-with">
     <div class="logo-corner wit"><span class="w" style="font-size:13px">W<span class="o">O</span>MEN in tech</span><span class="col">Colombia</span></div>
-    <div class="with-grid">
+    <div class="with-stack">
       <div class="with-hero">
-        <div class="wit-h-mark">
-          <span class="wit-h-top">WIT-h<span class="ast">✳</span></span>
-          <span class="wit-h-sub">Women In Tech · Hub</span>
+        <div class="wit-h-badge">
+          <span class="wit-h-big">WIT-h<span class="ast">✳</span></span>
+          <span class="wit-h-tag">Women In Tech · Hub</span>
         </div>
-        <p class="with-quote">Aquí no termina el taller: empieza una comunidad.</p>
+        <h2 class="with-title">No te quedes con la <span class="accent">duda</span></h2>
+        <p class="with-lead">Llévate tu notebook, tu prompt favorito y la comunidad. Aquí seguimos aprendiendo juntas.</p>
       </div>
-      <div class="with-actions">
-        <div class="kicker">Sigue la magia</div>
-        <h2 class="slide-title">No te quedes con la <span class="accent">duda</span></h2>
-        <div class="with-cards">
-          <div class="wc">
-            <div class="wc-ic">🔖</div>
-            <div class="wc-body">
-              <h3>Guarda tu notebook</h3>
-              <p>Queda en tu Drive para siempre. Lo puedes reabrir y reutilizar con otros datos.</p>
-            </div>
-          </div>
-          <div class="wc">
-            <div class="wc-ic">📊</div>
-            <div class="wc-body">
-              <h3>Comparte tu primer gráfico</h3>
-              <p>Sube tu visualización a la comunidad y recibe feedback de otras mujeres en tech.</p>
-            </div>
-          </div>
-          <div class="wc">
-            <div class="wc-ic">🤝</div>
-            <div class="wc-body">
-              <h3>Únete al hub</h3>
-              <p>Conecta con la red <span class="pill">women-in-tech.org/colombia</span></p>
-            </div>
-          </div>
+      <div class="with-row">
+        <div class="wc">
+          <div class="wc-ic">🔖</div>
+          <h3>Guarda tu notebook</h3>
+          <p>Queda en tu Drive. Lo reabres y lo reutilizas con otros datos.</p>
+        </div>
+        <div class="wc">
+          <div class="wc-ic">📊</div>
+          <h3>Comparte tu gráfico</h3>
+          <p>Sube tu primera visualización a la comunidad y recibe feedback.</p>
+        </div>
+        <div class="wc">
+          <div class="wc-ic">🤝</div>
+          <h3>Únete al hub</h3>
+          <p><span class="pill">women-in-tech.org/colombia</span></p>
         </div>
       </div>
     </div>
@@ -1327,10 +1318,10 @@ drive.<span class="fn">mount</span>(<span class="str">'/content/drive'</span>)
       <div class="wit reveal"><span class="w">W<span class="o">O</span>MEN</span><span class="w row2">in tech</span><span class="col">Colombia</span></div>
       <div class="speaker-card reveal" data-stop>
         <span class="sc-brand">Trabajo Científico</span>
-        <div class="sc-name">Oscar Iván Vargas Pineda</div>
+        <div class="sc-name">Oscar Ivan Vargas Pineda</div>
         <div class="sc-links">
           <a class="sc-link" href="https://www.trabajocientifico.org" target="_blank" rel="noopener"><span class="sc-icon">🌐</span>www.trabajocientifico.org</a>
-          <a class="sc-link youtube" href="https://www.youtube.com/@trabajocientifico" target="_blank" rel="noopener"><span class="sc-icon">▶</span>YouTube · @trabajocientifico</a>
+          <a class="sc-link youtube" href="https://www.youtube.com/@tcientifico" target="_blank" rel="noopener"><span class="sc-icon">▶</span>YouTube · @tcientifico</a>
         </div>
       </div>
       <button class="btn ghost sm reveal" id="restart" data-stop>↺ Repetir la sesión</button>
